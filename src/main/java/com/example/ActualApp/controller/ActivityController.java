@@ -19,7 +19,6 @@ public class ActivityController {
 
     @GetMapping
     public List<ActivityDto> activities() {
-        return null;
+        return activityService.getAllActivities();
     }
-
 }
