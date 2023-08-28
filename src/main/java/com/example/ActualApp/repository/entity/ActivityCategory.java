@@ -9,8 +9,8 @@ import java.util.UUID;
 
 public class ActivityCategory {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-    private String name;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.UUID)
+//    private UUID id;
+//    private String name;
 }
