@@ -1,6 +1,7 @@
 package com.example.ActualApp.mapper;
 
 import com.example.ActualApp.controller.dto.ActivityDto;
+import com.example.ActualApp.controller.dto.NewActivityDto;
 import com.example.ActualApp.repository.entity.Activity;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,15 @@ public class ActivityMapper {
                 entity.getTimeSpentInMinutes(),
                 entity.getDate(),
                 entity.isCompleted()
+        );
+    }
+
+    public Activity mapNewActivityDtoToEntity(NewActivityDto entity) {
+        return new Activity(
+                entity.description(),
+                entity.timeSpentInMinutes(),
+                entity.date(),
+                entity.completed()
         );
     }
 }

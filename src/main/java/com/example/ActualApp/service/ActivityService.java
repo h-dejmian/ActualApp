@@ -1,8 +1,10 @@
 package com.example.ActualApp.service;
 
 import com.example.ActualApp.controller.dto.ActivityDto;
+import com.example.ActualApp.controller.dto.NewActivityDto;
 import com.example.ActualApp.mapper.ActivityMapper;
 import com.example.ActualApp.repository.ActivityRepository;
+import com.example.ActualApp.repository.entity.Activity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,5 +23,10 @@ public class ActivityService {
         return activityRepository.findAll().stream()
                 .map(activityMapper::mapActivityToDto)
                 .toList();
+    }
+
+    public NewActivityDto saveNewActivity(NewActivityDto newActivity) {
+        Activity activity = activityRepository.save(activityMapper.mapNewActivityDtoToEntity(newActivity));
+        return newActivity;
     }
 }

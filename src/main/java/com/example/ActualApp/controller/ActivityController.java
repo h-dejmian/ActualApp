@@ -1,10 +1,10 @@
 package com.example.ActualApp.controller;
 
 import com.example.ActualApp.controller.dto.ActivityDto;
+import com.example.ActualApp.controller.dto.NewActivityDto;
 import com.example.ActualApp.service.ActivityService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,7 +18,12 @@ public class ActivityController {
     }
 
     @GetMapping
-    public List<ActivityDto> activities() {
+    public List<ActivityDto> getAllActivities() {
         return activityService.getAllActivities();
+    }
+
+    @PostMapping
+    public NewActivityDto createNewActivity(@Valid @RequestBody NewActivityDto newActivity) {
+        return activityService.saveNewActivity(newActivity);
     }
 }

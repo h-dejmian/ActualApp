@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -17,6 +18,13 @@ import java.util.UUID;
 @Entity
 public class Activity {
     private static final int MINUTES_IN_A_DAY = 1440;
+
+    public Activity(String description, int timeSpentInMinutes, @NotNull LocalDate date, boolean completed) {
+        this.description = description;
+        this.timeSpentInMinutes = timeSpentInMinutes;
+        this.date = date;
+        this.completed = completed;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
