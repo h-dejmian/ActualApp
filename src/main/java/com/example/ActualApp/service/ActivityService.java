@@ -5,9 +5,12 @@ import com.example.ActualApp.controller.dto.NewActivityDto;
 import com.example.ActualApp.mapper.ActivityMapper;
 import com.example.ActualApp.repository.ActivityRepository;
 import com.example.ActualApp.repository.entity.Activity;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ActivityService {
@@ -26,7 +29,13 @@ public class ActivityService {
     }
 
     public NewActivityDto saveNewActivity(NewActivityDto newActivity) {
-        Activity activity = activityRepository.save(activityMapper.mapNewActivityDtoToEntity(newActivity));
+        activityRepository.save(activityMapper.mapNewActivityDtoToEntity(newActivity));
         return newActivity;
+    }
+
+    public ActivityDto getActivityById(UUID id) {
+        return activityRepository.findById(id)
+                .map(activityMapper::mapActivityToDto)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 }

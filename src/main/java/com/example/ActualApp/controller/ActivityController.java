@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/activities")
@@ -20,6 +21,11 @@ public class ActivityController {
     @GetMapping
     public List<ActivityDto> getAllActivities() {
         return activityService.getAllActivities();
+    }
+
+    @GetMapping("/{id}")
+    public ActivityDto getActivityById(@PathVariable UUID id) {
+        return activityService.getActivityById(id);
     }
 
     @PostMapping
