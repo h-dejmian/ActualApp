@@ -33,6 +33,8 @@ public class Activity {
     private String description;
     @Range(min = 0, max = MINUTES_IN_A_DAY, message = "Time spent should not be less than 0 and greater than 1440")
     private int timeSpentInMinutes;
+    @ManyToOne
+    private ActivityCategory category;
     @NotNull
     private LocalDate date;
     private boolean completed;
