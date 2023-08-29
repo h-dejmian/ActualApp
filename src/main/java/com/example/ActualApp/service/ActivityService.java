@@ -28,14 +28,16 @@ public class ActivityService {
                 .toList();
     }
 
-    public NewActivityDto saveNewActivity(NewActivityDto newActivity) {
-        activityRepository.save(activityMapper.mapNewActivityDtoToEntity(newActivity));
-        return newActivity;
-    }
-
     public ActivityDto getActivityById(UUID id) {
         return activityRepository.findById(id)
                 .map(activityMapper::mapActivityToDto)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
+
+    public NewActivityDto saveNewActivity(NewActivityDto newActivity) {
+        activityRepository.save(activityMapper.mapNewActivityDtoToEntity(newActivity));
+        return newActivity;
+    }
+
+
 }

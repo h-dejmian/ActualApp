@@ -26,4 +26,10 @@ public class ActivityCategory {
     private int priority;
     @OneToMany(mappedBy = "category")
     private List<Activity> activities = new ArrayList<>();
+
+    public ActivityCategory(String name, int priority, List<Activity> activities) {
+        this.name = name;
+        this.priority = priority;
+        this.activities = activities;
+    }
 }
