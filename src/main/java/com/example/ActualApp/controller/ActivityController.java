@@ -32,4 +32,10 @@ public class ActivityController {
     public NewActivityDto createNewActivity(@Valid @RequestBody NewActivityDto newActivity) {
         return activityService.saveNewActivity(newActivity);
     }
+
+    @PatchMapping("/{id}")
+    public ActivityDto toggleCompleted(@PathVariable UUID id) {
+        return activityService.toggleCompleted(id);
+    }
+
 }

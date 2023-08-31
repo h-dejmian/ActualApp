@@ -40,4 +40,11 @@ public class ActivityService {
     }
 
 
+    public ActivityDto toggleCompleted(UUID id) {
+        Activity activity = activityRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        activity.setCompleted(!activity.isCompleted());
+        activityRepository.save(activity);
+        return activityMapper.mapActivityToDto(activity);
+    }
 }
