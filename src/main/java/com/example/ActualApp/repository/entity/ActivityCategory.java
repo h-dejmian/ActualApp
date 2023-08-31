@@ -24,7 +24,7 @@ public class ActivityCategory {
     private String name;
     @Range(min = 1, max = 7, message = "Priority should be number between 1 and 7")
     private int priority;
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
     private List<Activity> activities = new ArrayList<>();
 
     public ActivityCategory(String name, int priority, List<Activity> activities) {

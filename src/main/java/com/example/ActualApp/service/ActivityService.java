@@ -47,4 +47,8 @@ public class ActivityService {
         activityRepository.save(activity);
         return activityMapper.mapActivityToDto(activity);
     }
+
+    public void deleteActivity(UUID id) {
+        activityRepository.deleteById(id);
+    }
 }

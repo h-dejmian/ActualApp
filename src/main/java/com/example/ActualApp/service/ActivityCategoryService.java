@@ -41,5 +41,9 @@ public class ActivityCategoryService {
         return category;
     }
 
+    public void deleteCategory(UUID id) {
+        categoryRepository.deleteById(id);
+    }
+
 
 }

@@ -33,4 +33,10 @@ public class ActivityCategoryController {
     public NewActivityCategoryDto saveNewCategory(@Valid @RequestBody NewActivityCategoryDto category) {
         return categoryService.saveNewCategory(category);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteCategory(@PathVariable UUID id) {
+        categoryService.deleteCategory(id);
+    }
+
 }

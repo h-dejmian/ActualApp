@@ -38,4 +38,9 @@ public class ActivityController {
         return activityService.toggleCompleted(id);
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteActivity(@PathVariable UUID id) {
+        activityService.deleteActivity(id);
+    }
+
 }
