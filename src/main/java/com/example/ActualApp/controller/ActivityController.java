@@ -28,6 +28,11 @@ public class ActivityController {
         return activityService.getActivityById(id);
     }
 
+    @GetMapping("/categories/{categoryId}")
+    public List<ActivityDto> getActivitiesByCategory(@PathVariable UUID categoryId) {
+        return activityService.getActivitiesByCategory(categoryId);
+    }
+
     @PostMapping
     public NewActivityDto createNewActivity(@Valid @RequestBody NewActivityDto newActivity) {
         return activityService.saveNewActivity(newActivity);
