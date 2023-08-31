@@ -1,5 +1,7 @@
 package com.example.ActualApp.repository.entity;
 
+import com.example.ActualApp.mapper.ActivityMapper;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,11 +21,12 @@ import java.util.UUID;
 public class Activity {
     private static final int MINUTES_IN_A_DAY = 1440;
 
-    public Activity(String description, int timeSpentInMinutes, @NotNull LocalDate date, boolean completed) {
+    public Activity(String description, int timeSpentInMinutes, @NotNull LocalDate date, boolean completed, ActivityCategory category) {
         this.description = description;
         this.timeSpentInMinutes = timeSpentInMinutes;
         this.date = date;
         this.completed = completed;
+        this.category = category;
     }
 
     @Id
@@ -33,6 +36,7 @@ public class Activity {
     private String description;
     @Range(min = 0, max = MINUTES_IN_A_DAY, message = "Time spent should not be less than 0 and greater than 1440")
     private int timeSpentInMinutes;
+    @JsonBackReference
     @ManyToOne
     private ActivityCategory category;
     @NotNull

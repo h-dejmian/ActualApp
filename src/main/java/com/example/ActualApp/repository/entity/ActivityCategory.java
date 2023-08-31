@@ -1,5 +1,6 @@
 package com.example.ActualApp.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -21,9 +22,11 @@ public class ActivityCategory {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @NotBlank
+    @Column(unique = true)
     private String name;
     @Range(min = 1, max = 7, message = "Priority should be number between 1 and 7")
     private int priority;
+    @JsonManagedReference
     @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
     private List<Activity> activities = new ArrayList<>();
 

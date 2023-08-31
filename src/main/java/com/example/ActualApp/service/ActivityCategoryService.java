@@ -37,7 +37,11 @@ public class ActivityCategoryService {
                 .orElseThrow();
     }
 
-
+    public ActivityCategoryDto getCategoryByName(String name) {
+        return categoryRepository.findByName(name)
+                .map(categoryMapper::mapActivityCategoryToDto)
+                .orElseThrow();
+    }
 
     public NewActivityCategoryDto saveNewCategory(NewActivityCategoryDto category) {
         categoryRepository.save(categoryMapper.mapNewActivityCategoryDtoToCategory(category));

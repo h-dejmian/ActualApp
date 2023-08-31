@@ -1,5 +1,6 @@
 package com.example.ActualApp.service;
 
+import com.example.ActualApp.controller.dto.ActivityCategoryDto;
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
 import com.example.ActualApp.mapper.ActivityMapper;
@@ -17,8 +18,9 @@ import java.util.UUID;
 @Service
 public class ActivityService {
     private final ActivityRepository activityRepository;
-    private final ActivityMapper activityMapper;
     private final ActivityCategoryRepository categoryRepository;
+    private final ActivityMapper activityMapper;
+
 
     public ActivityService(ActivityRepository activityRepository, ActivityMapper activityMapper, ActivityCategoryRepository categoryRepository) {
         this.activityRepository = activityRepository;
@@ -47,7 +49,10 @@ public class ActivityService {
     }
 
     public NewActivityDto saveNewActivity(NewActivityDto newActivity) {
-        activityRepository.save(activityMapper.mapNewActivityDtoToEntity(newActivity));
+        ActivityCategory category = categoryRepository.findByName(newActivity.categoryName())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        activityRepository.save(activityMapper.mapNewActivityDtoToEntity(newActivity, category));
         return newActivity;
     }
 

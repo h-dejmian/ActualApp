@@ -2,6 +2,7 @@ package com.example.ActualApp.controller;
 
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
+import com.example.ActualApp.repository.ActivityCategoryRepository;
 import com.example.ActualApp.service.ActivityService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +14,11 @@ import java.util.UUID;
 @RequestMapping("/api/v1/activities")
 public class ActivityController {
     private final ActivityService activityService;
+    private final ActivityCategoryRepository categoryRepository;
 
-    public ActivityController(ActivityService activityService) {
+    public ActivityController(ActivityService activityService, ActivityCategoryRepository categoryRepository) {
         this.activityService = activityService;
+        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping
