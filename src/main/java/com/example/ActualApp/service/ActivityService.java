@@ -8,6 +8,7 @@ import com.example.ActualApp.repository.ActivityCategoryRepository;
 import com.example.ActualApp.repository.ActivityRepository;
 import com.example.ActualApp.repository.entity.Activity;
 import com.example.ActualApp.repository.entity.ActivityCategory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -30,6 +31,12 @@ public class ActivityService {
 
     public List<ActivityDto> getAllActivities() {
         return activityRepository.findAll().stream()
+                .map(activityMapper::mapActivityToDto)
+                .toList();
+    }
+
+    public List<ActivityDto> getAllActivities(Pageable pageable) {
+        return activityRepository.findAllBy(pageable).stream()
                 .map(activityMapper::mapActivityToDto)
                 .toList();
     }
@@ -68,4 +75,6 @@ public class ActivityService {
     public void deleteActivity(UUID id) {
         activityRepository.deleteById(id);
     }
+
+
 }

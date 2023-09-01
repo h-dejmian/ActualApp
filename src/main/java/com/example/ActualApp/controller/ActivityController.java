@@ -5,6 +5,7 @@ import com.example.ActualApp.controller.dto.NewActivityDto;
 import com.example.ActualApp.repository.ActivityCategoryRepository;
 import com.example.ActualApp.service.ActivityService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,11 @@ public class ActivityController {
     @GetMapping("/{id}")
     public ActivityDto getActivityById(@PathVariable UUID id) {
         return activityService.getActivityById(id);
+    }
+
+    @GetMapping(params = {"sort"})
+    public List<ActivityDto> getAllActivitiesSorted(Pageable pageable) {
+        return activityService.getAllActivities(pageable);
     }
 
     @GetMapping("/categories/{categoryId}")
