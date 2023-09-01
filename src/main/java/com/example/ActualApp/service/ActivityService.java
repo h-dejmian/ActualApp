@@ -1,6 +1,7 @@
 package com.example.ActualApp.service;
 
 import com.example.ActualApp.controller.dto.ActivityCategoryDto;
+import com.example.ActualApp.controller.dto.ActivityDescAndTimeDto;
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
 import com.example.ActualApp.mapper.ActivityMapper;
@@ -53,6 +54,10 @@ public class ActivityService {
                 .map(activities -> activities.stream()
                         .map(activityMapper::mapActivityToDto).toList())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    public List<ActivityDescAndTimeDto> getActivitiesByTime() {
+        return activityMapper.mapToDescAndTimeDto(activityRepository.getActivitiesByTime());
     }
 
     public NewActivityDto saveNewActivity(NewActivityDto newActivity) {

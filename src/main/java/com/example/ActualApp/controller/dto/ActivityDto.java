@@ -10,7 +10,7 @@ import java.util.UUID;
 public record ActivityDto (
          UUID id,
          String description,
-         int timeSpentInMinutes,
+         long timeSpentInMinutes,
          LocalDate date,
          boolean completed
 ) {

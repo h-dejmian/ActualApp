@@ -14,4 +14,7 @@ public interface ActivityRepository extends JpaRepository<Activity, UUID> {
 
     @Query("SELECT a FROM Activity a")
     List<Activity> findAllBy(Pageable pageable);
+
+    @Query("SELECT a.description, SUM(a.timeSpentInMinutes) FROM Activity a GROUP BY a.description")
+    List<List<Object>> getActivitiesByTime();
 }

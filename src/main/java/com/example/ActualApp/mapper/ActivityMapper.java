@@ -1,10 +1,13 @@
 package com.example.ActualApp.mapper;
 
+import com.example.ActualApp.controller.dto.ActivityDescAndTimeDto;
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
 import com.example.ActualApp.repository.entity.Activity;
 import com.example.ActualApp.repository.entity.ActivityCategory;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class ActivityMapper {
@@ -26,6 +29,11 @@ public class ActivityMapper {
                 activity.completed(),
                 category
         );
+    }
 
+    public List<ActivityDescAndTimeDto> mapToDescAndTimeDto(List<List<Object>> descAndTime) {
+        return descAndTime.stream()
+                .map(li -> new ActivityDescAndTimeDto((String)li.get(0), (long)li.get(1)))
+                .toList();
     }
 }

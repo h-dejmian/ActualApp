@@ -12,7 +12,7 @@ public record NewActivityDto(
         @NotBlank
         String description,
         @Range(min = 0, max = 1440, message = "Time spent should not be less than 0 and greater than 1440")
-        int timeSpentInMinutes,
+        long timeSpentInMinutes,
         @NotNull
         LocalDate date,
         boolean completed,

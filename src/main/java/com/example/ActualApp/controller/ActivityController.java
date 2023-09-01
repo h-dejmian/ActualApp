@@ -1,5 +1,6 @@
 package com.example.ActualApp.controller;
 
+import com.example.ActualApp.controller.dto.ActivityDescAndTimeDto;
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
 import com.example.ActualApp.repository.ActivityCategoryRepository;
@@ -25,6 +26,11 @@ public class ActivityController {
     @GetMapping
     public List<ActivityDto> getAllActivities() {
         return activityService.getAllActivities();
+    }
+
+    @GetMapping(params = {"groupByTime"})
+    public List<ActivityDescAndTimeDto> getActivitiesByTime() {
+         return activityService.getActivitiesByTime();
     }
 
     @GetMapping("/{id}")
