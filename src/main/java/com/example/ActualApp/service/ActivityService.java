@@ -1,6 +1,5 @@
 package com.example.ActualApp.service;
 
-import com.example.ActualApp.controller.dto.ActivityCategoryDto;
 import com.example.ActualApp.controller.dto.ActivityDescAndTimeDto;
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
@@ -14,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -56,7 +56,14 @@ public class ActivityService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    public List<ActivityDescAndTimeDto> getActivitiesByTime() {
+    public List<ActivityDto> getActivitiesByDate(String date) {
+        List<Activity> activities = activityRepository.findAllByDate(LocalDate.parse(date));
+        return activities.stream()
+                .map(activityMapper::mapActivityToDto)
+                .toList();
+    }
+
+    public List<ActivityDescAndTimeDto> getActivitiesByTimeSpent() {
         return activityMapper.mapToDescAndTimeDto(activityRepository.getActivitiesByTime());
     }
 

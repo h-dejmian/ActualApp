@@ -30,7 +30,12 @@ public class ActivityController {
 
     @GetMapping(params = {"groupByTime"})
     public List<ActivityDescAndTimeDto> getActivitiesByTime() {
-         return activityService.getActivitiesByTime();
+         return activityService.getActivitiesByTimeSpent();
+    }
+
+    @GetMapping(params = {"date"})
+    public List<ActivityDto> getActivitiesByDate(@RequestParam String date) {
+        return activityService.getActivitiesByDate(date);
     }
 
     @GetMapping("/{id}")
