@@ -21,4 +21,11 @@ public interface ActivityRepository extends JpaRepository<Activity, UUID> {
 
     @Query("SELECT a.description, SUM(a.timeSpentInMinutes) FROM Activity a GROUP BY a.description")
     List<List<Object>> getActivitiesByTime();
+
+    @Query("SELECT a.description, COUNT(1) FROM Activity a " +
+            "WHERE a.completed=false " +
+            "GROUP BY a.description " +
+            "ORDER BY COUNT(1) DESC " +
+            "LIMIT 1 ")
+    List<List<Object>> getMostOftenNotCompletedActivity();
 }

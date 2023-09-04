@@ -48,6 +48,12 @@ public class ActivityController {
         return activityService.getAllActivities(pageable);
     }
 
+    @GetMapping(params = {"mostOftenNotCompleted"})
+    public List<ActivityDescAndTimeDto> getMostOftenNotCompletedActivity() {
+        return activityService.getMostOftenNotCompletedActivity();
+    }
+
+
     @GetMapping("/categories/{categoryId}")
     public List<ActivityDto> getActivitiesByCategory(@PathVariable UUID categoryId) {
         return activityService.getActivitiesByCategory(categoryId);

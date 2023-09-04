@@ -67,6 +67,10 @@ public class ActivityService {
         return activityMapper.mapToDescAndTimeDto(activityRepository.getActivitiesByTime());
     }
 
+    public List<ActivityDescAndTimeDto> getMostOftenNotCompletedActivity() {
+        return activityMapper.mapToDescAndTimeDto(activityRepository.getMostOftenNotCompletedActivity());
+    }
+
     public NewActivityDto saveNewActivity(NewActivityDto newActivity) {
         ActivityCategory category = categoryRepository.findByName(newActivity.categoryName())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -74,7 +78,6 @@ public class ActivityService {
         activityRepository.save(activityMapper.mapNewActivityDtoToEntity(newActivity, category));
         return newActivity;
     }
-
 
     public ActivityDto toggleCompleted(UUID id) {
         Activity activity = activityRepository.findById(id)
