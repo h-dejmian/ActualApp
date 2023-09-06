@@ -1,5 +1,6 @@
 package com.example.ActualApp.service;
 
+import com.example.ActualApp.controller.dto.DescriptionDto;
 import com.example.ActualApp.controller.dto.NameAndCountDto;
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
@@ -83,6 +84,14 @@ public class ActivityService {
         Activity activity = activityRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         activity.setCompleted(!activity.isCompleted());
+        activityRepository.save(activity);
+        return activityMapper.mapActivityToDto(activity);
+    }
+
+    public ActivityDto updateDescription(UUID id, DescriptionDto description) {
+        Activity activity = activityRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        activity.setDescription(description.description());
         activityRepository.save(activity);
         return activityMapper.mapActivityToDto(activity);
     }

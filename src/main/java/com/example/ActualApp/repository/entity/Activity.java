@@ -33,6 +33,7 @@ public class Activity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @NotBlank
+    @Setter
     private String description;
     @Range(min = 0, max = MINUTES_IN_A_DAY, message = "Time spent should not be less than 0 and greater than 1440")
     private long timeSpentInMinutes;

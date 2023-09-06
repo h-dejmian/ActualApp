@@ -1,5 +1,6 @@
 package com.example.ActualApp.controller;
 
+import com.example.ActualApp.controller.dto.DescriptionDto;
 import com.example.ActualApp.controller.dto.NameAndCountDto;
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
@@ -79,6 +80,11 @@ public class ActivityController {
     @PatchMapping("/{id}")
     public ActivityDto toggleCompleted(@PathVariable UUID id) {
         return activityService.toggleCompleted(id);
+    }
+
+    @PatchMapping(value = "/{id}", params = {"description"})
+    public ActivityDto updateDescription(@PathVariable UUID id, @RequestBody DescriptionDto description) {
+        return activityService.updateDescription(id, description);
     }
 
     @DeleteMapping("/{id}")
