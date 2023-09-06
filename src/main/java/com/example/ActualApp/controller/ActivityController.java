@@ -28,19 +28,32 @@ public class ActivityController {
         return activityService.getAllActivities();
     }
 
-    @GetMapping(params = {"groupByTime"})
-    public List<ActivityDescAndTimeDto> getActivitiesByTime() {
-         return activityService.getActivitiesByTimeSpent();
+    @GetMapping(params = {"groupByTime", "mostOftenNotCompleted"})
+    public List<ActivityDescAndTimeDto> getActivitiesByParams(@RequestParam Boolean groupByTime,
+                                                              @RequestParam Boolean mostOftenNotCompleted) {
+        if(groupByTime) {
+            return activityService.getActivitiesByTimeSpent();
+        }
+
+        else if(mostOftenNotCompleted) {
+            return activityService.getMostOftenNotCompletedActivity();
+        }
+        return null;
     }
+
+//    @GetMapping(params = {"groupByTime"})
+//    public List<ActivityDescAndTimeDto> getActivitiesByTime() {
+//         return activityService.getActivitiesByTimeSpent();
+//    }
+//
+//    @GetMapping(params = {"mostOftenNotCompleted"})
+//    public List<ActivityDescAndTimeDto> getMostOftenNotCompletedActivity() {
+//        return activityService.getMostOftenNotCompletedActivity();
+//    }
 
     @GetMapping(params = {"date"})
     public List<ActivityDto> getActivitiesByDate(@RequestParam String date) {
         return activityService.getActivitiesByDate(date);
-    }
-
-    @GetMapping("/{id}")
-    public ActivityDto getActivityById(@PathVariable UUID id) {
-        return activityService.getActivityById(id);
     }
 
     @GetMapping(params = {"sort"})
@@ -48,11 +61,10 @@ public class ActivityController {
         return activityService.getAllActivities(pageable);
     }
 
-    @GetMapping(params = {"mostOftenNotCompleted"})
-    public List<ActivityDescAndTimeDto> getMostOftenNotCompletedActivity() {
-        return activityService.getMostOftenNotCompletedActivity();
+    @GetMapping("/{id}")
+    public ActivityDto getActivityById(@PathVariable UUID id) {
+        return activityService.getActivityById(id);
     }
-
 
     @GetMapping("/categories/{categoryId}")
     public List<ActivityDto> getActivitiesByCategory(@PathVariable UUID categoryId) {
