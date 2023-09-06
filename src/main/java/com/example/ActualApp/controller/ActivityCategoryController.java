@@ -1,6 +1,7 @@
 package com.example.ActualApp.controller;
 
 import com.example.ActualApp.controller.dto.ActivityCategoryDto;
+import com.example.ActualApp.controller.dto.NameAndCountDto;
 import com.example.ActualApp.controller.dto.NewActivityCategoryDto;
 import com.example.ActualApp.service.ActivityCategoryService;
 import jakarta.validation.Valid;
@@ -27,6 +28,11 @@ public class ActivityCategoryController {
     @GetMapping("/{id}")
     public ActivityCategoryDto getCategoryById(@PathVariable UUID id) {
         return categoryService.getCategoryById(id);
+    }
+
+    @GetMapping(params = {"categoriesWithTimeSpent"})
+    public List<NameAndCountDto> getCategoriesWithTimeSpent() {
+        return categoryService.getCategoriesWithTimeSpent();
     }
 
     @PostMapping

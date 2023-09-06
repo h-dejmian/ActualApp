@@ -1,6 +1,6 @@
 package com.example.ActualApp.controller;
 
-import com.example.ActualApp.controller.dto.ActivityDescAndTimeDto;
+import com.example.ActualApp.controller.dto.NameAndCountDto;
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
 import com.example.ActualApp.repository.ActivityCategoryRepository;
@@ -29,8 +29,8 @@ public class ActivityController {
     }
 
     @GetMapping(params = {"groupByTime", "mostOftenNotCompleted"})
-    public List<ActivityDescAndTimeDto> getActivitiesByParams(@RequestParam Boolean groupByTime,
-                                                              @RequestParam Boolean mostOftenNotCompleted) {
+    public List<NameAndCountDto> getActivitiesByParams(@RequestParam Boolean groupByTime,
+                                                       @RequestParam Boolean mostOftenNotCompleted) {
         if(groupByTime) {
             return activityService.getActivitiesByTimeSpent();
         }

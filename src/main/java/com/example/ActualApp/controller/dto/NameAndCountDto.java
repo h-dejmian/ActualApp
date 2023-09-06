@@ -1,6 +1,6 @@
 package com.example.ActualApp.controller.dto;
 
-public record ActivityDescAndTimeDto(
+public record NameAndCountDto(
         String description,
         long timeSpentInMinutes
 ) {

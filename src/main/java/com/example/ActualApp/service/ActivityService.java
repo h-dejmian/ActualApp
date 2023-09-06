@@ -1,6 +1,6 @@
 package com.example.ActualApp.service;
 
-import com.example.ActualApp.controller.dto.ActivityDescAndTimeDto;
+import com.example.ActualApp.controller.dto.NameAndCountDto;
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
 import com.example.ActualApp.mapper.ActivityMapper;
@@ -63,12 +63,12 @@ public class ActivityService {
                 .toList();
     }
 
-    public List<ActivityDescAndTimeDto> getActivitiesByTimeSpent() {
-        return activityMapper.mapToDescAndTimeDto(activityRepository.getActivitiesByTime());
+    public List<NameAndCountDto> getActivitiesByTimeSpent() {
+        return activityMapper.mapToNameAndCountDto(activityRepository.getActivitiesByTime());
     }
 
-    public List<ActivityDescAndTimeDto> getMostOftenNotCompletedActivity() {
-        return activityMapper.mapToDescAndTimeDto(activityRepository.getMostOftenNotCompletedActivity());
+    public List<NameAndCountDto> getMostOftenNotCompletedActivity() {
+        return activityMapper.mapToNameAndCountDto(activityRepository.getMostOftenNotCompletedActivity());
     }
 
     public NewActivityDto saveNewActivity(NewActivityDto newActivity) {

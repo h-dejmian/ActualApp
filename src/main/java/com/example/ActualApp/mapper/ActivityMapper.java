@@ -1,6 +1,6 @@
 package com.example.ActualApp.mapper;
 
-import com.example.ActualApp.controller.dto.ActivityDescAndTimeDto;
+import com.example.ActualApp.controller.dto.NameAndCountDto;
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
 import com.example.ActualApp.repository.entity.Activity;
@@ -31,9 +31,9 @@ public class ActivityMapper {
         );
     }
 
-    public List<ActivityDescAndTimeDto> mapToDescAndTimeDto(List<List<Object>> descAndTime) {
+    public List<NameAndCountDto> mapToNameAndCountDto(List<List<Object>> descAndTime) {
         return descAndTime.stream()
-                .map(li -> new ActivityDescAndTimeDto((String)li.get(0), (long)li.get(1)))
+                .map(li -> new NameAndCountDto((String)li.get(0), (long)li.get(1)))
                 .toList();
     }
 }
