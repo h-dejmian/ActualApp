@@ -1,8 +1,6 @@
 package com.example.ActualApp.controller;
 
-import com.example.ActualApp.controller.dto.ActivityCategoryDto;
-import com.example.ActualApp.controller.dto.NameAndCountDto;
-import com.example.ActualApp.controller.dto.NewActivityCategoryDto;
+import com.example.ActualApp.controller.dto.*;
 import com.example.ActualApp.service.ActivityCategoryService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +36,11 @@ public class ActivityCategoryController {
     @PostMapping
     public NewActivityCategoryDto saveNewCategory(@Valid @RequestBody NewActivityCategoryDto category) {
         return categoryService.saveNewCategory(category);
+    }
+
+    @PatchMapping(value = "/{id}", params = {"description"})
+    public ActivityCategoryDto updateDescription(@PathVariable UUID id, @RequestBody DescriptionDto description) {
+        return categoryService.updateDescription(id, description);
     }
 
     @DeleteMapping("/{id}")

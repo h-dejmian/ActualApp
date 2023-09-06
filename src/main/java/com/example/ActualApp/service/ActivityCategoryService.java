@@ -1,11 +1,13 @@
 package com.example.ActualApp.service;
 
-import com.example.ActualApp.controller.dto.ActivityCategoryDto;
-import com.example.ActualApp.controller.dto.NameAndCountDto;
-import com.example.ActualApp.controller.dto.NewActivityCategoryDto;
+import com.example.ActualApp.controller.dto.*;
 import com.example.ActualApp.mapper.ActivityCategoryMapper;
 import com.example.ActualApp.repository.ActivityCategoryRepository;
+import com.example.ActualApp.repository.entity.Activity;
+import com.example.ActualApp.repository.entity.ActivityCategory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -50,5 +52,13 @@ public class ActivityCategoryService {
 
     public void deleteCategory(UUID id) {
         categoryRepository.deleteById(id);
+    }
+
+    public ActivityCategoryDto updateDescription(UUID id, DescriptionDto description) {
+        ActivityCategory category = categoryRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        category.setName(description.description());
+        categoryRepository.save(category);
+        return categoryMapper.mapActivityCategoryToDto(category);
     }
 }
