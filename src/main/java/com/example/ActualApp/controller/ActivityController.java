@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/activities")
 public class ActivityController {
@@ -29,28 +30,15 @@ public class ActivityController {
         return activityService.getAllActivities();
     }
 
-    @GetMapping(params = {"groupByTime", "mostOftenNotCompleted"})
-    public List<NameAndCountDto> getActivitiesByParams(@RequestParam Boolean groupByTime,
-                                                       @RequestParam Boolean mostOftenNotCompleted) {
-        if(groupByTime) {
-            return activityService.getActivitiesByTimeSpent();
-        }
-
-        else if(mostOftenNotCompleted) {
-            return activityService.getMostOftenNotCompletedActivity();
-        }
-        return null;
+    @GetMapping(params = {"groupByTime"})
+    public List<NameAndCountDto> getActivitiesByTime() {
+         return activityService.getActivitiesByTimeSpent();
     }
 
-//    @GetMapping(params = {"groupByTime"})
-//    public List<ActivityDescAndTimeDto> getActivitiesByTime() {
-//         return activityService.getActivitiesByTimeSpent();
-//    }
-//
-//    @GetMapping(params = {"mostOftenNotCompleted"})
-//    public List<ActivityDescAndTimeDto> getMostOftenNotCompletedActivity() {
-//        return activityService.getMostOftenNotCompletedActivity();
-//    }
+    @GetMapping(params = {"mostOftenNotCompleted"})
+    public List<NameAndCountDto> getMostOftenNotCompletedActivity() {
+        return activityService.getMostOftenNotCompletedActivity();
+    }
 
     @GetMapping(params = {"date"})
     public List<ActivityDto> getActivitiesByDate(@RequestParam String date) {
@@ -85,6 +73,11 @@ public class ActivityController {
     @PatchMapping(value = "/{id}", params = {"description"})
     public ActivityDto updateDescription(@PathVariable UUID id, @RequestBody DescriptionDto description) {
         return activityService.updateDescription(id, description);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ActivityDto updateActivity(@PathVariable UUID id, @RequestBody ActivityDto activity) {
+        return activityService.updateActivity(id, activity);
     }
 
     @DeleteMapping("/{id}")

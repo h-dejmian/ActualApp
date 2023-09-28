@@ -101,4 +101,12 @@ public class ActivityService {
     }
 
 
+    public ActivityDto updateActivity(UUID id, ActivityDto activity) {
+        Activity activityToUpdate = activityRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        activityToUpdate.setDescription(activity.description());
+        activityToUpdate.setTimeSpentInMinutes(activity.timeSpentInMinutes());
+
+        return activityMapper.mapActivityToDto(activityRepository.save(activityToUpdate));
+    }
 }
