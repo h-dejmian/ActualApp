@@ -17,7 +17,8 @@ public class ActivityMapper {
                 entity.getDescription(),
                 entity.getTimeSpentInMinutes(),
                 entity.getDate(),
-                entity.isCompleted()
+                entity.isCompleted(),
+                entity.getCategory().getName()
         );
     }
 

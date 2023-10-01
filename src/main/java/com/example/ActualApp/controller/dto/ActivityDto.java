@@ -1,8 +1,6 @@
 package com.example.ActualApp.controller.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.Range;
+import com.example.ActualApp.repository.entity.ActivityCategory;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -12,6 +10,7 @@ public record ActivityDto (
          String description,
          long timeSpentInMinutes,
          LocalDate date,
-         boolean completed
+         boolean completed,
+         String category
 ) {
 }
