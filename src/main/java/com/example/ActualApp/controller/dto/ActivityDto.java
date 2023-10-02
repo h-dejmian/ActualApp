@@ -11,6 +11,6 @@ public record ActivityDto (
          long timeSpentInMinutes,
          LocalDate date,
          boolean completed,
-         String category
+         String categoryName
 ) {
 }
