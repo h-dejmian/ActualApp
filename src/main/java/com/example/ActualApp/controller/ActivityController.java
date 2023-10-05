@@ -61,7 +61,7 @@ public class ActivityController {
     }
 
     @PostMapping
-    public NewActivityDto createNewActivity(@Valid @RequestBody NewActivityDto newActivity) {
+    public ActivityDto createNewActivity(@Valid @RequestBody NewActivityDto newActivity) {
         return activityService.saveNewActivity(newActivity);
     }
 

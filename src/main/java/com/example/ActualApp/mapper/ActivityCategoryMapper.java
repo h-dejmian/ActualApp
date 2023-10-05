@@ -23,8 +23,7 @@ public class ActivityCategoryMapper {
     public ActivityCategory mapNewActivityCategoryDtoToCategory(NewActivityCategoryDto category) {
         return new ActivityCategory(
                 category.name(),
-                category.priority(),
-                category.activities()
+                3
         );
     }
 

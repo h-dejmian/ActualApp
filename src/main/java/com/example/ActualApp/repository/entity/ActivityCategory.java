@@ -32,6 +32,11 @@ public class ActivityCategory {
     @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
     private List<Activity> activities = new ArrayList<>();
 
+    public ActivityCategory(String name, int priority) {
+        this.name = name;
+        this.priority = priority;
+    }
+
     public ActivityCategory(String name, int priority, List<Activity> activities) {
         this.name = name;
         this.priority = priority;

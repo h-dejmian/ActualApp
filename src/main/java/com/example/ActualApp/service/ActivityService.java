@@ -72,12 +72,12 @@ public class ActivityService {
         return activityMapper.mapToNameAndCountDto(activityRepository.getMostOftenNotCompletedActivity());
     }
 
-    public NewActivityDto saveNewActivity(NewActivityDto newActivity) {
+    public ActivityDto saveNewActivity(NewActivityDto newActivity) {
         ActivityCategory category = categoryRepository.findByName(newActivity.categoryName())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        activityRepository.save(activityMapper.mapNewActivityDtoToEntity(newActivity, category));
-        return newActivity;
+        Activity activity = activityRepository.save(activityMapper.mapNewActivityDtoToEntity(newActivity, category));
+        return activityMapper.mapActivityToDto(activity);
     }
 
     public ActivityDto toggleCompleted(UUID id) {
