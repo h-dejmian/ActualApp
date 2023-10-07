@@ -1,0 +1,1 @@
+INSERT INTO activity(id, description, time_spent_in_minutes, date, completed, category_id ) VALUES('201bc653-d180-488a-a945-558c47e202b6','TestCompletedFalse', 60, '2023-09-04', false, 'babdef25-ee00-4f8b-a454-dbe1b77140b5');

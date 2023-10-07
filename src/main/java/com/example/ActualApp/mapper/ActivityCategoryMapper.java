@@ -10,6 +10,7 @@ import java.util.List;
 
 @Component
 public class ActivityCategoryMapper {
+    private static final int DEFAULT_PRIORITY = 3;
 
     public ActivityCategoryDto mapActivityCategoryToDto(ActivityCategory category) {
         return new ActivityCategoryDto(
@@ -23,7 +24,7 @@ public class ActivityCategoryMapper {
     public ActivityCategory mapNewActivityCategoryDtoToCategory(NewActivityCategoryDto category) {
         return new ActivityCategory(
                 category.name(),
-                3
+                DEFAULT_PRIORITY
         );
     }
 
