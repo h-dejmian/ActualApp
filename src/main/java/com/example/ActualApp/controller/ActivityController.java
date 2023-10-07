@@ -18,11 +18,10 @@ import java.util.UUID;
 @RequestMapping("/api/v1/activities")
 public class ActivityController {
     private final ActivityService activityService;
-    private final ActivityCategoryRepository categoryRepository;
 
-    public ActivityController(ActivityService activityService, ActivityCategoryRepository categoryRepository) {
+
+    public ActivityController(ActivityService activityService) {
         this.activityService = activityService;
-        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping
