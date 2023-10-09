@@ -9,3 +9,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+app:
+  security:
+    jwt:
+      token:
+        secret: eyJhbGciOiJIUzUxMiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY5Njg1Nzk3MCwiaWF0IjoxNjk2ODU3OTcwfQ.sy-WETzTWGl84t6l8Ryjh7U9aV0Je0T2yWQ3rM4nC1s9SN3gbWd6xLd4zpbetEcrfL2ErRQ05nPpmNI2t7XpNw
+        validity: 60 #min

@@ -1,5 +1,7 @@
 package com.example.ActualApp.auth.config;
 
+import com.example.ActualApp.auth.jwt.JwtRequestFilter;
+import com.example.ActualApp.auth.jwt.JwtTokenService;
 import com.example.ActualApp.auth.user.UserRepository;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +30,7 @@ import java.util.Collection;
 @EnableMethodSecurity(jsr250Enabled = true)
 public class SpringSecurityConfig {
 
-    private static final String[] URL_WHITELIST = {"/api/v1/register", "/api/v1/login", "/error", "/swagger-ui/**",  "/v3/api-docs/**"};
+    private static final String[] URL_WHITELIST = {"/api/v1/register", "/api/v1/login", "/error"};
     public static final String ACTIVITIES_READ = "ACTIVITIES_READ";
     public static final String ACTIVITIES_WRITE = "ACTIVITIES_WRITE";
 
