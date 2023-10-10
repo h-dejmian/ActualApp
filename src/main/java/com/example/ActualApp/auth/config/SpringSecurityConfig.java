@@ -30,7 +30,7 @@ import java.util.Collection;
 @EnableMethodSecurity(jsr250Enabled = true)
 public class SpringSecurityConfig {
 
-    private static final String[] URL_WHITELIST = {"/api/v1/register", "/api/v1/login", "/error"};
+    private static final String[] URL_WHITELIST = {"/api/v1/register", "/api/v1/login", "/error", "/api/v1/activities"};
     public static final String ACTIVITIES_READ = "ACTIVITIES_READ";
     public static final String ACTIVITIES_WRITE = "ACTIVITIES_WRITE";
 
@@ -51,7 +51,7 @@ public class SpringSecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository) {
-        return username -> userRepository.findByName(username)
+        return username -> userRepository.findByUserName(username)
                 .map(u -> new UserDetails() {
                     @Override
                     public Collection<? extends GrantedAuthority> getAuthorities() {

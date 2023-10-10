@@ -34,4 +34,9 @@ public class AuthController {
 
         return new JwtTokenResponse(jwtTokenService.generateToken(jwtTokenRequest.userName()));
     }
+
+    @PostMapping("/register")
+    public RegisteredUserDto registerUser(@Valid @RequestBody UserRegistrationDto dto) {
+        return authService.registerNewUser(dto);
+    }
 }

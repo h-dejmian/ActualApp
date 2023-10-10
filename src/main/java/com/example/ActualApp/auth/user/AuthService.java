@@ -1,7 +1,12 @@
 package com.example.ActualApp.auth.user;
 
+import com.example.ActualApp.auth.RegisteredUserDto;
+import com.example.ActualApp.auth.UserRegistrationDto;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import static com.example.ActualApp.auth.config.SpringSecurityConfig.ACTIVITIES_READ;
+import static com.example.ActualApp.auth.config.SpringSecurityConfig.ACTIVITIES_WRITE;
 
 @Service
 public class AuthService {
@@ -15,27 +20,26 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
-//    public RegisteredUserDto registerNewUser(UserRegistrationDto userRegistrationDto) {
-//
-//        validateUserEmail(userRegistrationDto);
-//
-//        User newUser = new User(
-//                userRegistrationDto.login(),
-//                passwordEncoder.encode(userRegistrationDto.password()));
-//        Role userRole = roleRepository.findByName(DEVELOPER_READ)
-//                .orElseThrow(() -> new RuntimeException("Expected user role in database"));
-//
-//        newUser.addRole(userRole);
-//        userRole.assignToUser(newUser);
-//
-//        User savedUser = userRepository.save(newUser);
-//
-//        return new RegisteredUserDto(savedUser.getId(), savedUser.getEmail());
-//    }
+    public RegisteredUserDto registerNewUser(UserRegistrationDto userRegistrationDto) {
 
-    // TODO: extract to separate class
+//        validateUserEmail(userRegistrationDto);
+
+        User newUser = new User(
+                userRegistrationDto.login(),
+                passwordEncoder.encode(userRegistrationDto.password()));
+        Role userRole = roleRepository.findByName(ACTIVITIES_READ)
+                .orElseThrow(() -> new RuntimeException("Expected user role in database"));
+
+        newUser.addRole(userRole);
+        userRole.assignToUser(newUser);
+
+        User savedUser = userRepository.save(newUser);
+
+        return new RegisteredUserDto(savedUser.getId(), savedUser.getUserName());
+    }
+
 //    private void validateUserEmail(UserRegistrationDto userRegistrationDto) {
-//        userRepository.findByEmail(userRegistrationDto.login()).ifPresent(
+//        userRepository.findByUserName(userRegistrationDto.login()).ifPresent(
 //                u -> { throw new UserAlreadyExistsException(userRegistrationDto.login()); }
 //        );
 //    }
