@@ -2,14 +2,14 @@ package com.example.ActualApp.auth;
 
 import com.example.ActualApp.auth.jwt.JwtTokenService;
 import com.example.ActualApp.auth.user.AuthService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:3000/", allowCredentials = "true")
 @RestController
 @RequestMapping("/api/v1")
 public class AuthController {
@@ -25,14 +25,24 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public JwtTokenResponse login(@Valid @RequestBody JwtTokenRequest jwtTokenRequest) {
+    public JwtTokenResponse login(@Valid @RequestBody JwtTokenRequest jwtTokenRequest, HttpServletResponse response) {
         var authentication = new UsernamePasswordAuthenticationToken(
                 jwtTokenRequest.userName(), jwtTokenRequest.password()
         );
 
         authenticationManager.authenticate(authentication);
 
-        return new JwtTokenResponse(jwtTokenService.generateToken(jwtTokenRequest.userName()));
+        String token = jwtTokenService.generateToken(jwtTokenRequest.userName());
+
+        Cookie cookie = new Cookie("jwt-token", token);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setAttribute("SameSite", "None");
+
+        response.addCookie(cookie);
+
+
+        return new JwtTokenResponse(token);
     }
 
     @PostMapping("/register")

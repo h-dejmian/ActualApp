@@ -29,8 +29,11 @@ public class AuthService {
                 passwordEncoder.encode(userRegistrationDto.password()));
         Role userRole = roleRepository.findByName(ACTIVITIES_READ)
                 .orElseThrow(() -> new RuntimeException("Expected user role in database"));
+        Role userRole2 = roleRepository.findByName(ACTIVITIES_WRITE)
+                .orElseThrow(() -> new RuntimeException("Expected user role in database"));
 
         newUser.addRole(userRole);
+        newUser.addRole(userRole2);
         userRole.assignToUser(newUser);
 
         User savedUser = userRepository.save(newUser);

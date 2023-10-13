@@ -3,9 +3,11 @@ package com.example.ActualApp.auth.jwt;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,6 +41,7 @@ public class JwtRequestFilter  extends OncePerRequestFilter {
             try {
                 String userName = jwtTokenService.getUserNameFromToken(jwtToken);
                 authenticateUser(request, jwtToken, userName);
+
             } catch (IllegalArgumentException ex) {
                 log.error("Unable to parse JWT token", ex);
             } catch (ExpiredJwtException ex) {
