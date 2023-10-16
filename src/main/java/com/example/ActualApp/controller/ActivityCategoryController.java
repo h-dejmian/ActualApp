@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static com.example.ActualApp.auth.config.SpringSecurityConfig.ADMIN;
+import static com.example.ActualApp.auth.config.SpringSecurityConfig.USER;
 
 @CrossOrigin(originPatterns = "http://localhost:3000/*")
 @RestController
@@ -22,37 +23,37 @@ public class ActivityCategoryController {
         this.categoryService = categoryService;
     }
 
-    @RolesAllowed(ADMIN)
+    @RolesAllowed({ADMIN, USER})
     @GetMapping
     public List<ActivityCategoryDto> getAllCategories() {
         return categoryService.getAllCategories();
     }
 
-    @RolesAllowed(ADMIN)
+    @RolesAllowed({ADMIN, USER})
     @GetMapping("/{id}")
     public ActivityCategoryDto getCategoryById(@PathVariable UUID id) {
         return categoryService.getCategoryById(id);
     }
 
-    @RolesAllowed(ADMIN)
+    @RolesAllowed({ADMIN, USER})
     @GetMapping(params = {"categoriesWithTimeSpent"})
     public List<NameAndCountDto> getCategoriesWithTimeSpent() {
         return categoryService.getCategoriesWithTimeSpent();
     }
 
-    @RolesAllowed(ADMIN)
+    @RolesAllowed({ADMIN, USER})
     @PostMapping
     public NewActivityCategoryDto saveNewCategory(@Valid @RequestBody NewActivityCategoryDto category) {
         return categoryService.saveNewCategory(category);
     }
 
-    @RolesAllowed(ADMIN)
+    @RolesAllowed({ADMIN, USER})
     @PatchMapping(value = "/{id}", params = {"description"})
     public ActivityCategoryDto updateDescription(@PathVariable UUID id, @RequestBody DescriptionDto description) {
         return categoryService.updateDescription(id, description);
     }
 
-    @RolesAllowed(ADMIN)
+    @RolesAllowed({ADMIN, USER})
     @DeleteMapping("/{id}")
     public void deleteCategory(@PathVariable UUID id) {
         categoryService.deleteCategory(id);

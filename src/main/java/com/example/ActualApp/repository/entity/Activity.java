@@ -1,5 +1,6 @@
 package com.example.ActualApp.repository.entity;
 
+import com.example.ActualApp.auth.user.User;
 import com.example.ActualApp.mapper.ActivityMapper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -46,4 +47,6 @@ public class Activity {
     private LocalDate date;
     @Setter
     private boolean completed;
+    @ManyToOne
+    private User user;
 }

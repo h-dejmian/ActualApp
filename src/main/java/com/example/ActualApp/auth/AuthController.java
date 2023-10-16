@@ -33,7 +33,6 @@ public class AuthController {
     @PostMapping("/login")
     public UserDto login(@Valid @RequestBody JwtTokenRequest jwtTokenRequest, HttpServletResponse response) {
         String userName = jwtTokenRequest.userName();
-//        String password = jwtTokenRequest.password();
         User user = userRepository.findByUserName(userName).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         var authentication = new UsernamePasswordAuthenticationToken(

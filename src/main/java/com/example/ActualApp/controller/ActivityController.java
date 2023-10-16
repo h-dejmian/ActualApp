@@ -27,73 +27,73 @@ public class ActivityController {
         this.activityService = activityService;
     }
 
-    @RolesAllowed(ADMIN)
+    @RolesAllowed({ADMIN, USER})
     @GetMapping
     public List<ActivityDto> getAllActivities() {
         return activityService.getAllActivities();
     }
 
-    @RolesAllowed(ADMIN)
+    @RolesAllowed({ADMIN, USER})
     @GetMapping(params = {"groupByTime"})
     public List<NameAndCountDto> getActivitiesByTime() {
          return activityService.getActivitiesByTimeSpent();
     }
 
-    @RolesAllowed(ADMIN)
+    @RolesAllowed({ADMIN, USER})
     @GetMapping(params = {"mostOftenNotCompleted"})
     public List<NameAndCountDto> getMostOftenNotCompletedActivity() {
         return activityService.getMostOftenNotCompletedActivity();
     }
 
-    @RolesAllowed(ADMIN)
+    @RolesAllowed({ADMIN, USER})
     @GetMapping(params = {"date"})
     public List<ActivityDto> getActivitiesByDate(@RequestParam String date) {
         return activityService.getActivitiesByDate(date);
     }
 
-    @RolesAllowed(ADMIN)
+    @RolesAllowed({ADMIN, USER})
     @GetMapping(params = {"sort"})
     public List<ActivityDto> getAllActivitiesSorted(Pageable pageable) {
         return activityService.getAllActivities(pageable);
     }
 
-    @RolesAllowed(ADMIN)
+    @RolesAllowed({ADMIN, USER})
     @GetMapping("/{id}")
     public ActivityDto getActivityById(@PathVariable UUID id) {
         return activityService.getActivityById(id);
     }
 
-    @RolesAllowed(ADMIN)
+    @RolesAllowed({ADMIN, USER})
     @GetMapping("/categories/{categoryId}")
     public List<ActivityDto> getActivitiesByCategory(@PathVariable UUID categoryId) {
         return activityService.getActivitiesByCategory(categoryId);
     }
 
-    @RolesAllowed(ADMIN)
+    @RolesAllowed({ADMIN, USER})
     @PostMapping
     public ActivityDto createNewActivity(@Valid @RequestBody NewActivityDto newActivity) {
         return activityService.saveNewActivity(newActivity);
     }
 
-    @RolesAllowed(ADMIN)
+    @RolesAllowed({ADMIN, USER})
     @PatchMapping("/{id}")
     public ActivityDto toggleCompleted(@PathVariable UUID id) {
         return activityService.toggleCompleted(id);
     }
 
-    @RolesAllowed(ADMIN)
+    @RolesAllowed({ADMIN, USER})
     @PatchMapping(value = "/{id}", params = {"description"})
     public ActivityDto updateDescription(@PathVariable UUID id, @RequestBody DescriptionDto description) {
         return activityService.updateDescription(id, description);
     }
 
-    @RolesAllowed(ADMIN)
+    @RolesAllowed({ADMIN, USER})
     @PutMapping(value = "/{id}")
     public ActivityDto updateActivity(@PathVariable UUID id, @RequestBody ActivityDto activity) {
         return activityService.updateActivity(id, activity);
     }
 
-    @RolesAllowed(ADMIN)
+    @RolesAllowed({ADMIN, USER})
     @DeleteMapping("/{id}")
     public void deleteActivity(@PathVariable UUID id) {
         activityService.deleteActivity(id);
