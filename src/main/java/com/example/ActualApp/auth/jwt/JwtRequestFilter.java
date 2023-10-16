@@ -34,6 +34,19 @@ public class JwtRequestFilter  extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader(AUTHORIZATION);
+        if(request.getCookies() != null) {
+            Cookie cookie = request.getCookies()[0];
+
+            try {
+                String userName = jwtTokenService.getUserNameFromToken(cookie.getValue());
+                authenticateUser(request, cookie.getValue(), userName);
+
+            } catch (IllegalArgumentException ex) {
+                log.error("Unable to parse JWT token", ex);
+            } catch (ExpiredJwtException ex) {
+                log.warn("JWT token {} is expired", cookie.getValue());
+            }
+        }
 
         if (authHeader != null && authHeader.startsWith(BEARER)) {
             String jwtToken = authHeader.substring(BEARER.length() + 1);

@@ -8,9 +8,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,26 +24,35 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @Configuration
+
 @EnableConfigurationProperties(AuthConfigProperties.class)
 @EnableMethodSecurity(jsr250Enabled = true)
 public class SpringSecurityConfig {
 
-    private static final String[] URL_WHITELIST = {"/api/v1/register", "/api/v1/login", "/error", "/api/v1/activities"};
-    public static final String ACTIVITIES_READ = "ACTIVITIES_READ";
-    public static final String ACTIVITIES_WRITE = "ACTIVITIES_WRITE";
+    private static final String[] URL_WHITELIST = {"/api/v1/register", "/api/v1/login", "/error"};
+    public static final String USER = "USER";
+    public static final String ADMIN = "ADMIN";
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationEntryPoint authenticationEntryPoint, JwtRequestFilter jwtRequestFilter) throws Exception {
+
+
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(ahr ->
                         ahr.requestMatchers(URL_WHITELIST).permitAll()
                                 .anyRequest().authenticated()
                 )
+                .cors(Customizer.withDefaults())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(eh -> eh.authenticationEntryPoint(authenticationEntryPoint))
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
@@ -117,5 +128,4 @@ public class SpringSecurityConfig {
     public JwtRequestFilter jwtRequestFilter(UserDetailsService userDetailsService, JwtTokenService jwtTokenService) {
         return new JwtRequestFilter(userDetailsService, jwtTokenService);
     }
-
 }

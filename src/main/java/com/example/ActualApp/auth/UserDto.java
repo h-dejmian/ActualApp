@@ -2,7 +2,7 @@ package com.example.ActualApp.auth;
 
 import java.util.UUID;
 
-public record RegisteredUserDto(
+public record UserDto(
         UUID id,
         String login
 ) {
