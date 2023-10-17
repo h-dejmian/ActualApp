@@ -16,8 +16,8 @@ public interface ActivityRepository extends JpaRepository<Activity, UUID> {
 
     @Query("SELECT a FROM Activity a")
     List<Activity> findAllBy(Pageable pageable);
-    @Query("SELECT a FROM Activity a WHERE a.date = :date")
-    List<Activity> findAllByDate(@Param("date") LocalDate date);
+    @Query("SELECT a FROM Activity a WHERE a.date = :date AND a.user.id = :user_Id")
+    List<Activity> findAllByDateAndUser_Id(@Param("date") LocalDate date, UUID user_Id);
 
     @Query("SELECT a.description, SUM(a.timeSpentInMinutes) as sum FROM Activity a GROUP BY a.description")
     List<List<Object>> getActivitiesByTime();

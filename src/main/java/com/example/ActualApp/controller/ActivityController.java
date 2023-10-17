@@ -46,9 +46,9 @@ public class ActivityController {
     }
 
     @RolesAllowed({ADMIN, USER})
-    @GetMapping(params = {"date"})
-    public List<ActivityDto> getActivitiesByDate(@RequestParam String date) {
-        return activityService.getActivitiesByDate(date);
+    @GetMapping(value = "/{user_id}", params = {"date"})
+    public List<ActivityDto> getActivitiesByDate(@PathVariable UUID user_id, @RequestParam String date) {
+        return activityService.getActivitiesByDate(date, user_id);
     }
 
     @RolesAllowed({ADMIN, USER})

@@ -22,12 +22,13 @@ import java.util.UUID;
 public class Activity {
     private static final int MINUTES_IN_A_DAY = 1440;
 
-    public Activity(String description, long timeSpentInMinutes, @NotNull LocalDate date, boolean completed, ActivityCategory category) {
+    public Activity(String description, long timeSpentInMinutes, @NotNull LocalDate date, boolean completed, ActivityCategory category, User user) {
         this.description = description;
         this.timeSpentInMinutes = timeSpentInMinutes;
         this.date = date;
         this.completed = completed;
         this.category = category;
+        this.user = user;
     }
 
     @Id
@@ -47,6 +48,7 @@ public class Activity {
     private LocalDate date;
     @Setter
     private boolean completed;
+    @JsonBackReference
     @ManyToOne
     private User user;
 }

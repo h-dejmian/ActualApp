@@ -1,5 +1,6 @@
 package com.example.ActualApp.mapper;
 
+import com.example.ActualApp.auth.user.User;
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
 import com.example.ActualApp.repository.entity.Activity;
@@ -19,9 +20,10 @@ class ActivityMapperTest {
         //Given
         NewActivityDto newActivityDto = Instancio.create(NewActivityDto.class);
         ActivityCategory category = Instancio.create(ActivityCategory.class);
+        User user = Instancio.create(User.class);
 
         //When
-        Activity actual = activityMapper.mapNewActivityDtoToEntity(newActivityDto, category);
+        Activity actual = activityMapper.mapNewActivityDtoToEntity(newActivityDto, category, user);
 
         //Then
         Assertions.assertThat(actual.getDescription()).isEqualTo(newActivityDto.description());

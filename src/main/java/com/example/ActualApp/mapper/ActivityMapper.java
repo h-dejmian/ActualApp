@@ -1,5 +1,6 @@
 package com.example.ActualApp.mapper;
 
+import com.example.ActualApp.auth.user.User;
 import com.example.ActualApp.controller.dto.NameAndCountDto;
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
@@ -22,13 +23,14 @@ public class ActivityMapper {
         );
     }
 
-    public Activity mapNewActivityDtoToEntity(NewActivityDto activity, ActivityCategory category) {
+    public Activity mapNewActivityDtoToEntity(NewActivityDto activity, ActivityCategory category, User user) {
         return new Activity(
                 activity.description(),
                 activity.timeSpentInMinutes(),
                 activity.date(),
                 activity.completed(),
-                category
+                category,
+                user
         );
     }
 

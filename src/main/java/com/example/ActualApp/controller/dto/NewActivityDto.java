@@ -1,10 +1,12 @@
 package com.example.ActualApp.controller.dto;
 
+import com.example.ActualApp.auth.user.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Range;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public record NewActivityDto(
         @NotBlank
@@ -14,6 +16,7 @@ public record NewActivityDto(
         @NotNull
         LocalDate date,
         boolean completed,
-        String categoryName
+        String categoryName,
+        UUID user_Id
 ) {
 }

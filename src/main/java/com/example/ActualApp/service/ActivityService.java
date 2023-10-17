@@ -1,5 +1,7 @@
 package com.example.ActualApp.service;
 
+import com.example.ActualApp.auth.user.User;
+import com.example.ActualApp.auth.user.UserRepository;
 import com.example.ActualApp.controller.dto.DescriptionDto;
 import com.example.ActualApp.controller.dto.NameAndCountDto;
 import com.example.ActualApp.controller.dto.ActivityDto;
@@ -22,13 +24,16 @@ import java.util.UUID;
 public class ActivityService {
     private final ActivityRepository activityRepository;
     private final ActivityCategoryRepository categoryRepository;
+    private final UserRepository userRepository;
     private final ActivityMapper activityMapper;
 
 
-    public ActivityService(ActivityRepository activityRepository, ActivityMapper activityMapper, ActivityCategoryRepository categoryRepository) {
+    public ActivityService(ActivityRepository activityRepository,
+                           ActivityMapper activityMapper, ActivityCategoryRepository categoryRepository, UserRepository userRepository) {
         this.activityRepository = activityRepository;
         this.activityMapper = activityMapper;
         this.categoryRepository = categoryRepository;
+        this.userRepository = userRepository;
     }
 
     public List<ActivityDto> getAllActivities() {
@@ -57,8 +62,8 @@ public class ActivityService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    public List<ActivityDto> getActivitiesByDate(String date) {
-        List<Activity> activities = activityRepository.findAllByDate(LocalDate.parse(date));
+    public List<ActivityDto> getActivitiesByDate(String date, UUID user_id) {
+        List<Activity> activities = activityRepository.findAllByDateAndUser_Id(LocalDate.parse(date), user_id);
         return activities.stream()
                 .map(activityMapper::mapActivityToDto)
                 .toList();
@@ -75,8 +80,10 @@ public class ActivityService {
     public ActivityDto saveNewActivity(NewActivityDto newActivity) {
         ActivityCategory category = categoryRepository.findByName(newActivity.categoryName())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User user = userRepository.findById(newActivity.user_Id())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        Activity activity = activityRepository.save(activityMapper.mapNewActivityDtoToEntity(newActivity, category));
+        Activity activity = activityRepository.save(activityMapper.mapNewActivityDtoToEntity(newActivity, category, user));
         return activityMapper.mapActivityToDto(activity);
     }
 

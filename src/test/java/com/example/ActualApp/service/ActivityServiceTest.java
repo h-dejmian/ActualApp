@@ -13,14 +13,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class ActivityServiceTest {
 
     private final ActivityMapper activityMapper = Mockito.mock(ActivityMapper.class);
     private ActivityRepository activityRepository = Mockito.mock(ActivityRepository.class);
     private final ActivityCategoryRepository categoryRepository = Mockito.mock(ActivityCategoryRepository.class);
-    private final ActivityService activityService = new ActivityService(activityRepository, activityMapper, categoryRepository);
+    private final ActivityService activityService = new ActivityService(activityRepository, activityMapper, categoryRepository, userRepository);
 
     @Test
     void shouldReturnAllActivities() {
