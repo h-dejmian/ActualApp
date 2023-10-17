@@ -42,13 +42,7 @@ public class AuthController {
         authenticationManager.authenticate(authentication);
 
         String token = jwtTokenService.generateToken(jwtTokenRequest.userName());
-
-        Cookie cookie = new Cookie("jwt-token", token);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        cookie.setAttribute("SameSite", "None");
-
-        response.addCookie(cookie);
+        addHttpOnlyCookieToResponse(response, token);
 
         return new UserDto(user.getId(), userName);
     }
@@ -56,5 +50,14 @@ public class AuthController {
     @PostMapping("/register")
     public UserDto registerUser(@Valid @RequestBody UserRegistrationDto dto) {
         return authService.registerNewUser(dto);
+    }
+
+    private void addHttpOnlyCookieToResponse(HttpServletResponse response, String token) {
+        Cookie cookie = new Cookie("jwt-token", token);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setAttribute("SameSite", "None");
+
+        response.addCookie(cookie);
     }
 }

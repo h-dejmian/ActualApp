@@ -2,6 +2,7 @@ package com.example.ActualApp.auth.user;
 
 import com.example.ActualApp.auth.UserDto;
 import com.example.ActualApp.auth.UserRegistrationDto;
+import com.example.ActualApp.auth.user.exception.UserAlreadyExistsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class AuthService {
 
     public UserDto registerNewUser(UserRegistrationDto userRegistrationDto) {
 
-//        validateUserEmail(userRegistrationDto);
+        validateUserLogin(userRegistrationDto);
 
         User newUser = new User(
                 userRegistrationDto.login(),
@@ -39,9 +40,9 @@ public class AuthService {
         return new UserDto(savedUser.getId(), savedUser.getUserName());
     }
 
-//    private void validateUserEmail(UserRegistrationDto userRegistrationDto) {
-//        userRepository.findByUserName(userRegistrationDto.login()).ifPresent(
-//                u -> { throw new UserAlreadyExistsException(userRegistrationDto.login()); }
-//        );
-//    }
+    private void validateUserLogin(UserRegistrationDto userRegistrationDto) {
+        userRepository.findByUserName(userRegistrationDto.login()).ifPresent(
+                u -> { throw new UserAlreadyExistsException(userRegistrationDto.login()); }
+        );
+    }
 }
