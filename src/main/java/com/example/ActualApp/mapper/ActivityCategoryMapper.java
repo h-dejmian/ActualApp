@@ -17,7 +17,7 @@ public class ActivityCategoryMapper {
                 category.getId(),
                 category.getName(),
                 category.getPriority(),
-                category.getActivities()
+                category.getActivities().size()
         );
     }
 

@@ -9,6 +9,6 @@ public record ActivityCategoryDto(
         UUID id,
         String name,
         int priority,
-        List<Activity> activities
+        int activitiesNumber
 ) {
 }
