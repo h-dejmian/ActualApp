@@ -24,7 +24,7 @@ class ActivityCategoryMapperTest {
         Assertions.assertThat(actual.id()).isEqualTo(activityCategory.getId());
         Assertions.assertThat(actual.name()).isEqualTo(activityCategory.getName());
         Assertions.assertThat(actual.priority()).isEqualTo(activityCategory.getPriority());
-        Assertions.assertThat(actual.activities()).isEqualTo(activityCategory.getActivities());
+        Assertions.assertThat(actual.activitiesNumber()).isEqualTo(activityCategory.getActivities().size());
     }
 
     @Test

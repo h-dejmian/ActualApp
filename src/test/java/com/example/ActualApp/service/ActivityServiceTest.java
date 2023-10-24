@@ -1,5 +1,6 @@
 package com.example.ActualApp.service;
 
+import com.example.ActualApp.auth.user.UserRepository;
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.mapper.ActivityMapper;
 import com.example.ActualApp.repository.ActivityCategoryRepository;
@@ -9,6 +10,7 @@ import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
@@ -16,8 +18,9 @@ import java.util.*;
 class ActivityServiceTest {
 
     private final ActivityMapper activityMapper = Mockito.mock(ActivityMapper.class);
-    private ActivityRepository activityRepository = Mockito.mock(ActivityRepository.class);
+    private final ActivityRepository activityRepository = Mockito.mock(ActivityRepository.class);
     private final ActivityCategoryRepository categoryRepository = Mockito.mock(ActivityCategoryRepository.class);
+    private final UserRepository userRepository = Mockito.mock(UserRepository.class);
     private final ActivityService activityService = new ActivityService(activityRepository, activityMapper, categoryRepository, userRepository);
 
     @Test

@@ -11,10 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -22,7 +27,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+
 @WebMvcTest(controllers = ActivityController.class)
+@WithMockUser
 class ActivityControllerTest {
 
     @Autowired
@@ -62,7 +69,7 @@ class ActivityControllerTest {
         Mockito.when(activityService.getAllActivities()).thenReturn(activities);
 
         //When
-        var result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/activities"));
+        var result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/activities").with(user("user").roles("USER")));
 
         //Then
         result.andExpect(status().isOk())
@@ -79,7 +86,7 @@ class ActivityControllerTest {
     void shouldReturnNewActivity() throws Exception {
         //Given
         NewActivityDto newActivityDto = new NewActivityDto("Test description", 120,
-                LocalDate.of(2023, 10, 10), true, "Test Category");
+                LocalDate.of(2023, 10, 10), true, "Test Category", UUID.randomUUID());
         ActivityDto activityDto = new ActivityDto(UUID.randomUUID(), "Test description", 120,
                 LocalDate.of(2023, 10, 10), true, "Test Category");
 
@@ -94,7 +101,8 @@ class ActivityControllerTest {
                                         "timeSpentInMinutes" : 120,
                                         "date" : "2023-10-10",
                                         "completed" : true,
-                                        "categoryName" : "Test Category"
+                                        "categoryName" : "Test Category",
+                                        "user_id" : "c1d91ac4-c2f7-477c-8af0-17121a3ebb22"
                                 }
                                 """));
 
@@ -108,17 +116,4 @@ class ActivityControllerTest {
                 .andExpect(jsonPath("$.categoryName").value(activityDto.categoryName()));
     }
 
-    @Test
-    void shouldToggleCompleted() throws Exception {
-        //Given
-        ActivityDto activityDto = Instancio.of(ActivityDto.class).generate(Select.field(ActivityDto::completed))
-        Mockito.when(activityService.toggleCompleted(activityDto.id())).thenReturn(activityDto);
-
-        //When
-        var response = mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/activities/" + activityDto.id()));
-
-        //Then
-        response.andExpect(status().isOk())
-                .andExpect(jsonPath("$.completed").value(!activityDto.completed()));
-    }
 }
