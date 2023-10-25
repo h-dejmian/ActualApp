@@ -3,11 +3,13 @@ package com.example.ActualApp.controller;
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
 import com.example.ActualApp.service.ActivityService;
+import org.aspectj.lang.annotation.Before;
 import org.instancio.Instancio;
 import org.instancio.Select;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -17,8 +19,11 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.springSecurity;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -30,6 +35,7 @@ import java.util.UUID;
 
 @WebMvcTest(controllers = ActivityController.class)
 @WithMockUser
+@AutoConfigureMockMvc(addFilters = false)
 class ActivityControllerTest {
 
     @Autowired
@@ -37,6 +43,8 @@ class ActivityControllerTest {
 
     @MockBean
     private ActivityService activityService;
+
+
 
     @Test
     void shouldReturnActivityByGivenId() throws Exception {
@@ -86,7 +94,7 @@ class ActivityControllerTest {
     void shouldReturnNewActivity() throws Exception {
         //Given
         NewActivityDto newActivityDto = new NewActivityDto("Test description", 120,
-                LocalDate.of(2023, 10, 10), true, "Test Category", UUID.randomUUID());
+                LocalDate.of(2023, 10, 10), true, "Test Category", UUID.fromString("fd70909e-fc1b-4313-95d7-d07da61d90d0"));
         ActivityDto activityDto = new ActivityDto(UUID.randomUUID(), "Test description", 120,
                 LocalDate.of(2023, 10, 10), true, "Test Category");
 
@@ -102,7 +110,7 @@ class ActivityControllerTest {
                                         "date" : "2023-10-10",
                                         "completed" : true,
                                         "categoryName" : "Test Category",
-                                        "user_id" : "c1d91ac4-c2f7-477c-8af0-17121a3ebb22"
+                                        "user_Id" : "fd70909e-fc1b-4313-95d7-d07da61d90d0"
                                 }
                                 """));
 
