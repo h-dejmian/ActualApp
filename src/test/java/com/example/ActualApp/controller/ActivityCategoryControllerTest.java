@@ -52,7 +52,8 @@ class ActivityCategoryControllerTest {
                 .andExpect(jsonPath("$.id").value(activityCategoryDto.id().toString()))
                 .andExpect(jsonPath("$.name").value(activityCategoryDto.name()))
                 .andExpect(jsonPath("$.priority").value(activityCategoryDto.priority()))
-                .andExpect(jsonPath("$.activitiesNumber").value(activityCategoryDto.activitiesNumber()));
+                .andExpect(jsonPath("$.activitiesNumber").value(activityCategoryDto.activitiesNumber()))
+                .andExpect(jsonPath("$.timeSpentInMinutes").value(activityCategoryDto.timeSpentInMinutes()));
 
     }
 
@@ -74,7 +75,8 @@ class ActivityCategoryControllerTest {
                 .andExpect(jsonPath("$[0].id").value(activityCategoryDto.id().toString()))
                 .andExpect(jsonPath("$[0].name").value(activityCategoryDto.name().toString()))
                 .andExpect(jsonPath("$[0].priority").value(activityCategoryDto.priority()))
-                .andExpect(jsonPath("$[0].activitiesNumber").value(activityCategoryDto.activitiesNumber()));
+                .andExpect(jsonPath("$[0].activitiesNumber").value(activityCategoryDto.activitiesNumber()))
+                .andExpect(jsonPath("$[0].timeSpentInMinutes").value(activityCategoryDto.timeSpentInMinutes()));
     }
 
     @Test
