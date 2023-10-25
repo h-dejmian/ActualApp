@@ -53,12 +53,4 @@ public class ActivityCategoryService {
     public void deleteCategory(UUID id) {
         categoryRepository.deleteById(id);
     }
-
-    public ActivityCategoryDto updateDescription(UUID id, DescriptionDto description) {
-        ActivityCategory category = categoryRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        category.setName(description.description());
-        categoryRepository.save(category);
-        return categoryMapper.mapActivityCategoryToDto(category);
-    }
 }

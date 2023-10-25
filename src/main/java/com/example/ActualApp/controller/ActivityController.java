@@ -1,7 +1,6 @@
 package com.example.ActualApp.controller;
 
 import com.example.ActualApp.controller.dto.ActivityDto;
-import com.example.ActualApp.controller.dto.DescriptionDto;
 import com.example.ActualApp.controller.dto.NameAndCountDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
 import com.example.ActualApp.service.ActivityService;
@@ -13,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-import static com.example.ActualApp.auth.config.SpringSecurityConfig.USER;
 import static com.example.ActualApp.auth.config.SpringSecurityConfig.ADMIN;
+import static com.example.ActualApp.auth.config.SpringSecurityConfig.USER;
 
 @CrossOrigin(originPatterns = "http://localhost:3000/*")
 @RestController
@@ -81,11 +80,6 @@ public class ActivityController {
         return activityService.toggleCompleted(id);
     }
 
-    @RolesAllowed({ADMIN, USER})
-    @PatchMapping(value = "/{id}", params = {"description"})
-    public ActivityDto updateDescription(@PathVariable UUID id, @RequestBody DescriptionDto description) {
-        return activityService.updateDescription(id, description);
-    }
 
     @RolesAllowed({ADMIN, USER})
     @PutMapping(value = "/{id}")

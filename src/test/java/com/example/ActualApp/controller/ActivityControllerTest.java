@@ -44,8 +44,6 @@ class ActivityControllerTest {
     @MockBean
     private ActivityService activityService;
 
-
-
     @Test
     void shouldReturnActivityByGivenId() throws Exception {
         //Given
@@ -123,5 +121,4 @@ class ActivityControllerTest {
                 .andExpect(jsonPath("$.completed").value(activityDto.completed()))
                 .andExpect(jsonPath("$.categoryName").value(activityDto.categoryName()));
     }
-
 }

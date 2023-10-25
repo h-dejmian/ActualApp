@@ -48,12 +48,6 @@ public class ActivityCategoryController {
     }
 
     @RolesAllowed({ADMIN, USER})
-    @PatchMapping(value = "/{id}", params = {"description"})
-    public ActivityCategoryDto updateDescription(@PathVariable UUID id, @RequestBody DescriptionDto description) {
-        return categoryService.updateDescription(id, description);
-    }
-
-    @RolesAllowed({ADMIN, USER})
     @DeleteMapping("/{id}")
     public void deleteCategory(@PathVariable UUID id) {
         categoryService.deleteCategory(id);
