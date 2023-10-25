@@ -3,10 +3,12 @@ package com.example.ActualApp.mapper;
 import com.example.ActualApp.controller.dto.ActivityCategoryDto;
 import com.example.ActualApp.controller.dto.NameAndCountDto;
 import com.example.ActualApp.controller.dto.NewActivityCategoryDto;
+import com.example.ActualApp.repository.entity.Activity;
 import com.example.ActualApp.repository.entity.ActivityCategory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class ActivityCategoryMapper {
@@ -17,7 +19,8 @@ public class ActivityCategoryMapper {
                 category.getId(),
                 category.getName(),
                 category.getPriority(),
-                category.getActivities().size()
+                category.getActivities().size(),
+                category.getActivities().stream().map(Activity::getTimeSpentInMinutes).mapToLong(Long::longValue).sum()
         );
     }
 

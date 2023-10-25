@@ -9,6 +9,7 @@ public record ActivityCategoryDto(
         UUID id,
         String name,
         int priority,
-        int activitiesNumber
+        int activitiesNumber,
+        long timeSpentInMinutes
 ) {
 }
