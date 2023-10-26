@@ -17,7 +17,7 @@ import java.util.UUID;
 @Repository
 public interface ActivityCategoryRepository extends JpaRepository<ActivityCategory, UUID> {
     @Override
-    @Query("SELECT ac FROM ActivityCategory ac JOIN FETCH ac.activities")
+    @Query("SELECT ac FROM ActivityCategory ac FULL OUTER JOIN FETCH ac.activities")
     List<ActivityCategory> findAll();
 
     Optional<ActivityCategory> findByName(String name);

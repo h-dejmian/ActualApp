@@ -36,10 +36,4 @@ public class ActivityCategory {
         this.name = name;
         this.priority = priority;
     }
-
-    public ActivityCategory(String name, int priority, List<Activity> activities) {
-        this.name = name;
-        this.priority = priority;
-        this.activities = activities;
-    }
 }

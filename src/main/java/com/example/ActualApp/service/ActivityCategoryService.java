@@ -24,6 +24,7 @@ public class ActivityCategoryService {
     }
 
     public List<ActivityCategoryDto> getAllCategories() {
+        List<ActivityCategory> categories = categoryRepository.findAll();
         return categoryRepository.findAll().stream()
                 .map(categoryMapper::mapActivityCategoryToDto)
                 .toList();

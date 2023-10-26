@@ -20,8 +20,12 @@ public class ActivityCategoryMapper {
                 category.getName(),
                 category.getPriority(),
                 category.getActivities().size(),
-                category.getActivities().stream().map(Activity::getTimeSpentInMinutes).mapToLong(Long::longValue).sum()
+                getActivitiesTimeSum(category)
         );
+    }
+
+    private static long getActivitiesTimeSum(ActivityCategory category) {
+        return category.getActivities().stream().map(Activity::getTimeSpentInMinutes).mapToLong(Long::longValue).sum();
     }
 
     public ActivityCategory mapNewActivityCategoryDtoToCategory(NewActivityCategoryDto category) {
