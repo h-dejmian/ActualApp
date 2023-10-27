@@ -27,6 +27,7 @@ public class ActivityCategory {
     @Setter
     private String name;
     @Range(min = 1, max = 7, message = "Priority should be number between 1 and 7")
+    @Setter
     private int priority;
     @JsonManagedReference
     @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)

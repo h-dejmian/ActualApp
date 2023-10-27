@@ -22,6 +22,8 @@ public interface ActivityCategoryRepository extends JpaRepository<ActivityCatego
 
     Optional<ActivityCategory> findByName(String name);
 
+
+
     @Query("SELECT ac.name, SUM(a.timeSpentInMinutes) as sum FROM ActivityCategory ac " +
             "JOIN Activity a ON ac.id = a.category.id " +
             "GROUP BY ac.name " +

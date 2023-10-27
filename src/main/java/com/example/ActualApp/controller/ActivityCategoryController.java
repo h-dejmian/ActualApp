@@ -53,4 +53,10 @@ public class ActivityCategoryController {
         categoryService.deleteCategory(id);
     }
 
+    @RolesAllowed({ADMIN, USER})
+    @PutMapping("/{id}")
+    public ActivityCategoryDto updateCategory(@PathVariable UUID id, @RequestBody NewActivityCategoryDto activityCategoryDto) {
+        return categoryService.updateCategory(id, activityCategoryDto);
+    }
+
 }

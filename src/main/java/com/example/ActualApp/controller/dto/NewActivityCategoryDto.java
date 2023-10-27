@@ -8,6 +8,8 @@ import java.util.List;
 
 public record NewActivityCategoryDto(
         @NotBlank
-        String name
+        String name,
+
+        int priority
 ) {
 }

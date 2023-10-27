@@ -36,12 +36,6 @@ public class ActivityCategoryService {
                 .orElseThrow();
     }
 
-    public ActivityCategoryDto getCategoryByName(String name) {
-        return categoryRepository.findByName(name)
-                .map(categoryMapper::mapActivityCategoryToDto)
-                .orElseThrow();
-    }
-
     public List<NameAndCountDto> getCategoriesWithTimeSpent() {
         return categoryMapper.mapToNameAndCountDto(categoryRepository.getCategoriesWithTimeSpent());
     }
@@ -53,5 +47,17 @@ public class ActivityCategoryService {
 
     public void deleteCategory(UUID id) {
         categoryRepository.deleteById(id);
+    }
+
+    public ActivityCategoryDto updateCategory(UUID id, NewActivityCategoryDto activityCategoryDto) {
+        ActivityCategory categoryToUpdate = categoryRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        categoryToUpdate.setName(activityCategoryDto.name());
+        categoryToUpdate.setPriority(activityCategoryDto.priority());
+
+        categoryRepository.save(categoryToUpdate);
+
+        return categoryMapper.mapActivityCategoryToDto(categoryToUpdate);
     }
 }
