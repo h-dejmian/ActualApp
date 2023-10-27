@@ -43,7 +43,7 @@ public class ActivityCategoryController {
 
     @RolesAllowed({ADMIN, USER})
     @PostMapping
-    public NewActivityCategoryDto saveNewCategory(@Valid @RequestBody NewActivityCategoryDto category) {
+    public ActivityCategoryDto saveNewCategory(@Valid @RequestBody NewActivityCategoryDto category) {
         return categoryService.saveNewCategory(category);
     }
 

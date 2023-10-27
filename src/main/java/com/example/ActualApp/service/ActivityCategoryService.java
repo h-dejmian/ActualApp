@@ -40,9 +40,9 @@ public class ActivityCategoryService {
         return categoryMapper.mapToNameAndCountDto(categoryRepository.getCategoriesWithTimeSpent());
     }
 
-    public NewActivityCategoryDto saveNewCategory(NewActivityCategoryDto category) {
-        categoryRepository.save(categoryMapper.mapNewActivityCategoryDtoToCategory(category));
-        return category;
+    public ActivityCategoryDto saveNewCategory(NewActivityCategoryDto newCategory) {
+        ActivityCategory category = categoryRepository.save(categoryMapper.mapNewActivityCategoryDtoToCategory(newCategory));
+        return categoryMapper.mapActivityCategoryToDto(category);
     }
 
     public void deleteCategory(UUID id) {
