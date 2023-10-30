@@ -49,8 +49,7 @@ CREATE TABLE activity
     completed               boolean NOT NULL,
     user_id                  UUID,
     FOREIGN KEY (category_id) REFERENCES category(id),
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    UNIQUE (category_id, user_id)
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 INSERT INTO role (id, name)

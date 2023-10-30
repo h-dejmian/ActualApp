@@ -1,5 +1,7 @@
 package com.example.ActualApp.controller;
 
+import com.example.ActualApp.auth.user.User;
+import com.example.ActualApp.auth.user.UserRepository;
 import com.example.ActualApp.controller.dto.CategoryDto;
 import com.example.ActualApp.controller.dto.NewCategoryDto;
 import com.example.ActualApp.service.CategoryService;
@@ -17,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -32,6 +35,8 @@ class CategoryControllerTest {
 
     @MockBean
     private CategoryService categoryService;
+    @MockBean
+    private UserRepository userRepository;
 
     @Test
     void shouldReturnCategoryByGivenId() throws Exception {
@@ -78,21 +83,31 @@ class CategoryControllerTest {
     @Test
     void shouldReturnNewCategory() throws Exception {
         //Given
-        NewCategoryDto newCategoryDto = new NewCategoryDto("Test Category");
-        Mockito.when(categoryService.saveNewCategory(newCategoryDto)).thenReturn(newCategoryDto);
+        String id = "13a629b4-0bc2-4437-bc73-5914670c1a24";
+        CategoryDto categoryDto = new CategoryDto(UUID.fromString(id), "Test Category", 3, 0, 0 );
+        NewCategoryDto newCategoryDto = new NewCategoryDto("Test Category", 3, UUID.fromString(id));
+        User user = new User("Adam", "password");
+        Mockito.when(categoryService.saveNewCategory(newCategoryDto)).thenReturn(categoryDto);
+        Mockito.when(userRepository.findById(UUID.fromString(id))).thenReturn(Optional.of(user));
 
         //When
         var result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/categories")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                         {
-                                "name" : "Test Category"
+                                "name" : "Test Category",
+                                "priority": 3,                      
+                                "user_Id": "903f891f-4c2f-4f52-9768-bd499f35b02d"              
                         }
                         """));
 
         //Then
         result.andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value(newCategoryDto.name()));
+                .andExpect(jsonPath("$.name").value(categoryDto.name()))
+                .andExpect(jsonPath("$.priority").value(categoryDto.priority()))
+                .andExpect(jsonPath("$.id").value(categoryDto.id()))
+                .andExpect(jsonPath("$.activitiesNumber").value(0))
+                .andExpect(jsonPath("$.timeSpentInMinutes").value(0));
 
     }
 }

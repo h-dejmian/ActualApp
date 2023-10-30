@@ -1,5 +1,6 @@
 package com.example.ActualApp.mapper;
 
+import com.example.ActualApp.auth.user.User;
 import com.example.ActualApp.controller.dto.CategoryDto;
 import com.example.ActualApp.controller.dto.NewCategoryDto;
 import com.example.ActualApp.repository.entity.Category;
@@ -31,9 +32,10 @@ class CategoryMapperTest {
     void shouldMapNewActivityCategoryDtoToEntity() {
         //Given
         NewCategoryDto newCategoryDto = Instancio.create(NewCategoryDto.class);
+        User user = Instancio.create(User.class);
 
         //When
-        Category actual = categoryMapper.mapNewActivityCategoryDtoToCategory(newCategoryDto);
+        Category actual = categoryMapper.mapNewActivityCategoryDtoToCategory(newCategoryDto, user);
 
         //Then
         Assertions.assertThat(actual.getName()).isEqualTo(newCategoryDto.name());
