@@ -5,7 +5,7 @@ import com.example.ActualApp.controller.dto.NameAndCountDto;
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
 import com.example.ActualApp.repository.entity.Activity;
-import com.example.ActualApp.repository.entity.ActivityCategory;
+import com.example.ActualApp.repository.entity.Category;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class ActivityMapper {
         );
     }
 
-    public Activity mapNewActivityDtoToEntity(NewActivityDto activity, ActivityCategory category, User user) {
+    public Activity mapNewActivityDtoToEntity(NewActivityDto activity, Category category, User user) {
         return new Activity(
                 activity.description(),
                 activity.timeSpentInMinutes(),

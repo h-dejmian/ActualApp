@@ -39,6 +39,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Activity> activities = new ArrayList<>();
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Activity> categories = new ArrayList<>();
+
     public void addRole(Role userRole) {
         roles.add(userRole);
     }

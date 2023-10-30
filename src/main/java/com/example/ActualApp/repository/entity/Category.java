@@ -1,5 +1,7 @@
 package com.example.ActualApp.repository.entity;
 
+import com.example.ActualApp.auth.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -17,7 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class ActivityCategory {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -32,9 +34,13 @@ public class ActivityCategory {
     @JsonManagedReference
     @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
     private List<Activity> activities = new ArrayList<>();
+    @JsonBackReference
+    @ManyToOne
+    private User user;
 
-    public ActivityCategory(String name, int priority) {
+    public Category(String name, int priority, User user) {
         this.name = name;
         this.priority = priority;
+        this.user = user;
     }
 }

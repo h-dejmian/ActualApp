@@ -6,10 +6,10 @@ import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NameAndCountDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
 import com.example.ActualApp.mapper.ActivityMapper;
-import com.example.ActualApp.repository.ActivityCategoryRepository;
+import com.example.ActualApp.repository.CategoryRepository;
 import com.example.ActualApp.repository.ActivityRepository;
 import com.example.ActualApp.repository.entity.Activity;
-import com.example.ActualApp.repository.entity.ActivityCategory;
+import com.example.ActualApp.repository.entity.Category;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -22,13 +22,13 @@ import java.util.UUID;
 @Service
 public class ActivityService {
     private final ActivityRepository activityRepository;
-    private final ActivityCategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
     private final ActivityMapper activityMapper;
 
 
     public ActivityService(ActivityRepository activityRepository,
-                           ActivityMapper activityMapper, ActivityCategoryRepository categoryRepository, UserRepository userRepository) {
+                           ActivityMapper activityMapper, CategoryRepository categoryRepository, UserRepository userRepository) {
         this.activityRepository = activityRepository;
         this.activityMapper = activityMapper;
         this.categoryRepository = categoryRepository;
@@ -55,7 +55,7 @@ public class ActivityService {
 
     public List<ActivityDto> getActivitiesByCategory(UUID id) {
         return categoryRepository.findById(id)
-                .map(ActivityCategory::getActivities)
+                .map(Category::getActivities)
                 .map(activities -> activities.stream()
                         .map(activityMapper::mapActivityToDto).toList())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -77,7 +77,7 @@ public class ActivityService {
     }
 
     public ActivityDto saveNewActivity(NewActivityDto newActivity) {
-        ActivityCategory category = categoryRepository.findByName(newActivity.categoryName())
+        Category category = categoryRepository.findByName(newActivity.categoryName())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         User user = userRepository.findById(newActivity.user_Id())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -102,7 +102,7 @@ public class ActivityService {
     public ActivityDto updateActivity(UUID id, ActivityDto activity) {
         Activity activityToUpdate = activityRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        ActivityCategory category = categoryRepository.findByName(activity.categoryName())
+        Category category = categoryRepository.findByName(activity.categoryName())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         activityToUpdate.setDescription(activity.description());

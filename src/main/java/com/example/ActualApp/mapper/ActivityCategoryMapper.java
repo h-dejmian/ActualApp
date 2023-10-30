@@ -1,20 +1,20 @@
 package com.example.ActualApp.mapper;
 
+import com.example.ActualApp.auth.user.User;
 import com.example.ActualApp.controller.dto.ActivityCategoryDto;
 import com.example.ActualApp.controller.dto.NameAndCountDto;
 import com.example.ActualApp.controller.dto.NewActivityCategoryDto;
 import com.example.ActualApp.repository.entity.Activity;
-import com.example.ActualApp.repository.entity.ActivityCategory;
+import com.example.ActualApp.repository.entity.Category;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class ActivityCategoryMapper {
     private static final int DEFAULT_PRIORITY = 3;
 
-    public ActivityCategoryDto mapActivityCategoryToDto(ActivityCategory category) {
+    public ActivityCategoryDto mapActivityCategoryToDto(Category category) {
         return new ActivityCategoryDto(
                 category.getId(),
                 category.getName(),
@@ -24,14 +24,15 @@ public class ActivityCategoryMapper {
         );
     }
 
-    private static long getActivitiesTimeSum(ActivityCategory category) {
+    private static long getActivitiesTimeSum(Category category) {
         return category.getActivities().stream().map(Activity::getTimeSpentInMinutes).mapToLong(Long::longValue).sum();
     }
 
-    public ActivityCategory mapNewActivityCategoryDtoToCategory(NewActivityCategoryDto category) {
-        return new ActivityCategory(
+    public Category mapNewActivityCategoryDtoToCategory(NewActivityCategoryDto category, User user) {
+        return new Category(
                 category.name(),
-                DEFAULT_PRIORITY
+                category.priority(),
+                user
         );
     }
 

@@ -1,7 +1,7 @@
 package com.example.ActualApp.controller;
 
 import com.example.ActualApp.controller.dto.*;
-import com.example.ActualApp.service.ActivityCategoryService;
+import com.example.ActualApp.service.CategoryService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +15,11 @@ import static com.example.ActualApp.auth.config.SpringSecurityConfig.USER;
 @CrossOrigin(originPatterns = "http://localhost:3000/*")
 @RestController
 @RequestMapping("/api/v1/categories")
-public class ActivityCategoryController {
+public class CategoryController {
 
-    private final ActivityCategoryService categoryService;
+    private final CategoryService categoryService;
 
-    public ActivityCategoryController(ActivityCategoryService categoryService) {
+    public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 

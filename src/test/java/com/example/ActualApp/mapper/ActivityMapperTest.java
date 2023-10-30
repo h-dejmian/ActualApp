@@ -4,12 +4,10 @@ import com.example.ActualApp.auth.user.User;
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
 import com.example.ActualApp.repository.entity.Activity;
-import com.example.ActualApp.repository.entity.ActivityCategory;
+import com.example.ActualApp.repository.entity.Category;
 import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ActivityMapperTest {
 
@@ -19,7 +17,7 @@ class ActivityMapperTest {
     void shouldMapNewActivityDtoToEntity() {
         //Given
         NewActivityDto newActivityDto = Instancio.create(NewActivityDto.class);
-        ActivityCategory category = Instancio.create(ActivityCategory.class);
+        Category category = Instancio.create(Category.class);
         User user = Instancio.create(User.class);
 
         //When

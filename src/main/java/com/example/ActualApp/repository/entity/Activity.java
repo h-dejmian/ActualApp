@@ -1,7 +1,6 @@
 package com.example.ActualApp.repository.entity;
 
 import com.example.ActualApp.auth.user.User;
-import com.example.ActualApp.mapper.ActivityMapper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -22,7 +21,7 @@ import java.util.UUID;
 public class Activity {
     private static final int MINUTES_IN_A_DAY = 1440;
 
-    public Activity(String description, long timeSpentInMinutes, @NotNull LocalDate date, boolean completed, ActivityCategory category, User user) {
+    public Activity(String description, long timeSpentInMinutes, @NotNull LocalDate date, boolean completed, Category category, User user) {
         this.description = description;
         this.timeSpentInMinutes = timeSpentInMinutes;
         this.date = date;
@@ -43,7 +42,7 @@ public class Activity {
     @Setter
     @JsonBackReference
     @ManyToOne
-    private ActivityCategory category;
+    private Category category;
     @NotNull
     private LocalDate date;
     @Setter

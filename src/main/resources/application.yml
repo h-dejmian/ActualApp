@@ -7,9 +7,10 @@ spring:
   jpa:
     database: postgresql
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: true
-
+  flyway:
+    locations: db/migration/postgres
 app:
   security:
     jwt:

@@ -2,29 +2,29 @@ package com.example.ActualApp.mapper;
 
 import com.example.ActualApp.controller.dto.ActivityCategoryDto;
 import com.example.ActualApp.controller.dto.NewActivityCategoryDto;
-import com.example.ActualApp.repository.entity.ActivityCategory;
+import com.example.ActualApp.repository.entity.Category;
 import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 
 
 
-class ActivityCategoryMapperTest {
+class CategoryMapperTest {
     private final ActivityCategoryMapper activityCategoryMapper = new ActivityCategoryMapper();
 
     @Test
     void shouldMapActivityCategoryToDto() {
         //Given
-        ActivityCategory activityCategory = Instancio.create(ActivityCategory.class);
+        Category category = Instancio.create(Category.class);
 
         //When
-        ActivityCategoryDto actual = activityCategoryMapper.mapActivityCategoryToDto(activityCategory);
+        ActivityCategoryDto actual = activityCategoryMapper.mapActivityCategoryToDto(category);
 
         //Then
-        Assertions.assertThat(actual.id()).isEqualTo(activityCategory.getId());
-        Assertions.assertThat(actual.name()).isEqualTo(activityCategory.getName());
-        Assertions.assertThat(actual.priority()).isEqualTo(activityCategory.getPriority());
-        Assertions.assertThat(actual.activitiesNumber()).isEqualTo(activityCategory.getActivities().size());
+        Assertions.assertThat(actual.id()).isEqualTo(category.getId());
+        Assertions.assertThat(actual.name()).isEqualTo(category.getName());
+        Assertions.assertThat(actual.priority()).isEqualTo(category.getPriority());
+        Assertions.assertThat(actual.activitiesNumber()).isEqualTo(category.getActivities().size());
     }
 
     @Test
@@ -33,7 +33,7 @@ class ActivityCategoryMapperTest {
         NewActivityCategoryDto newActivityCategoryDto = Instancio.create(NewActivityCategoryDto.class);
 
         //When
-        ActivityCategory actual = activityCategoryMapper.mapNewActivityCategoryDtoToCategory(newActivityCategoryDto);
+        Category actual = activityCategoryMapper.mapNewActivityCategoryDtoToCategory(newActivityCategoryDto);
 
         //Then
         Assertions.assertThat(actual.getName()).isEqualTo(newActivityCategoryDto.name());
