@@ -1,7 +1,7 @@
 package com.example.ActualApp.mapper;
 
-import com.example.ActualApp.controller.dto.ActivityCategoryDto;
-import com.example.ActualApp.controller.dto.NewActivityCategoryDto;
+import com.example.ActualApp.controller.dto.CategoryDto;
+import com.example.ActualApp.controller.dto.NewCategoryDto;
 import com.example.ActualApp.repository.entity.Category;
 import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 
 class CategoryMapperTest {
-    private final ActivityCategoryMapper activityCategoryMapper = new ActivityCategoryMapper();
+    private final CategoryMapper categoryMapper = new CategoryMapper();
 
     @Test
     void shouldMapActivityCategoryToDto() {
@@ -18,7 +18,7 @@ class CategoryMapperTest {
         Category category = Instancio.create(Category.class);
 
         //When
-        ActivityCategoryDto actual = activityCategoryMapper.mapActivityCategoryToDto(category);
+        CategoryDto actual = categoryMapper.mapActivityCategoryToDto(category);
 
         //Then
         Assertions.assertThat(actual.id()).isEqualTo(category.getId());
@@ -30,12 +30,12 @@ class CategoryMapperTest {
     @Test
     void shouldMapNewActivityCategoryDtoToEntity() {
         //Given
-        NewActivityCategoryDto newActivityCategoryDto = Instancio.create(NewActivityCategoryDto.class);
+        NewCategoryDto newCategoryDto = Instancio.create(NewCategoryDto.class);
 
         //When
-        Category actual = activityCategoryMapper.mapNewActivityCategoryDtoToCategory(newActivityCategoryDto);
+        Category actual = categoryMapper.mapNewActivityCategoryDtoToCategory(newCategoryDto);
 
         //Then
-        Assertions.assertThat(actual.getName()).isEqualTo(newActivityCategoryDto.name());
+        Assertions.assertThat(actual.getName()).isEqualTo(newCategoryDto.name());
     }
 }

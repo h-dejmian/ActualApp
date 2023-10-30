@@ -1,7 +1,7 @@
 package com.example.ActualApp.controller;
 
-import com.example.ActualApp.controller.dto.ActivityCategoryDto;
-import com.example.ActualApp.controller.dto.NewActivityCategoryDto;
+import com.example.ActualApp.controller.dto.CategoryDto;
+import com.example.ActualApp.controller.dto.NewCategoryDto;
 import com.example.ActualApp.service.CategoryService;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
@@ -37,29 +37,29 @@ class CategoryControllerTest {
     void shouldReturnCategoryByGivenId() throws Exception {
         //Given
         UUID id = UUID.randomUUID();
-        ActivityCategoryDto activityCategoryDto = Instancio.create(ActivityCategoryDto.class);
-        Mockito.when(categoryService.getCategoryById(id)).thenReturn(activityCategoryDto);
+        CategoryDto categoryDto = Instancio.create(CategoryDto.class);
+        Mockito.when(categoryService.getCategoryById(id)).thenReturn(categoryDto);
 
         //When
         var response = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/categories/" + id));
 
         //Then
         response.andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(jsonPath("$.id").value(activityCategoryDto.id().toString()))
-                .andExpect(jsonPath("$.name").value(activityCategoryDto.name()))
-                .andExpect(jsonPath("$.priority").value(activityCategoryDto.priority()))
-                .andExpect(jsonPath("$.activitiesNumber").value(activityCategoryDto.activitiesNumber()))
-                .andExpect(jsonPath("$.timeSpentInMinutes").value(activityCategoryDto.timeSpentInMinutes()));
+                .andExpect(jsonPath("$.id").value(categoryDto.id().toString()))
+                .andExpect(jsonPath("$.name").value(categoryDto.name()))
+                .andExpect(jsonPath("$.priority").value(categoryDto.priority()))
+                .andExpect(jsonPath("$.activitiesNumber").value(categoryDto.activitiesNumber()))
+                .andExpect(jsonPath("$.timeSpentInMinutes").value(categoryDto.timeSpentInMinutes()));
 
     }
 
     @Test
     void shouldReturnAllActivities() throws Exception {
         //Given
-        List<ActivityCategoryDto> categories = Instancio.ofList(ActivityCategoryDto.class)
+        List<CategoryDto> categories = Instancio.ofList(CategoryDto.class)
                 .size(1)
                 .create();
-        ActivityCategoryDto activityCategoryDto = categories.get(0);
+        CategoryDto categoryDto = categories.get(0);
         Mockito.when(categoryService.getAllCategories()).thenReturn(categories);
 
         //When
@@ -68,18 +68,18 @@ class CategoryControllerTest {
         //Then
         response.andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(1))
-                .andExpect(jsonPath("$[0].id").value(activityCategoryDto.id().toString()))
-                .andExpect(jsonPath("$[0].name").value(activityCategoryDto.name().toString()))
-                .andExpect(jsonPath("$[0].priority").value(activityCategoryDto.priority()))
-                .andExpect(jsonPath("$[0].activitiesNumber").value(activityCategoryDto.activitiesNumber()))
-                .andExpect(jsonPath("$[0].timeSpentInMinutes").value(activityCategoryDto.timeSpentInMinutes()));
+                .andExpect(jsonPath("$[0].id").value(categoryDto.id().toString()))
+                .andExpect(jsonPath("$[0].name").value(categoryDto.name().toString()))
+                .andExpect(jsonPath("$[0].priority").value(categoryDto.priority()))
+                .andExpect(jsonPath("$[0].activitiesNumber").value(categoryDto.activitiesNumber()))
+                .andExpect(jsonPath("$[0].timeSpentInMinutes").value(categoryDto.timeSpentInMinutes()));
     }
 
     @Test
     void shouldReturnNewCategory() throws Exception {
         //Given
-        NewActivityCategoryDto newActivityCategoryDto = new NewActivityCategoryDto("Test Category");
-        Mockito.when(categoryService.saveNewCategory(newActivityCategoryDto)).thenReturn(newActivityCategoryDto);
+        NewCategoryDto newCategoryDto = new NewCategoryDto("Test Category");
+        Mockito.when(categoryService.saveNewCategory(newCategoryDto)).thenReturn(newCategoryDto);
 
         //When
         var result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/categories")
@@ -92,7 +92,7 @@ class CategoryControllerTest {
 
         //Then
         result.andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value(newActivityCategoryDto.name()));
+                .andExpect(jsonPath("$.name").value(newCategoryDto.name()));
 
     }
 }

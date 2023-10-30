@@ -25,13 +25,13 @@ public class CategoryController {
 
     @RolesAllowed({ADMIN, USER})
     @GetMapping
-    public List<ActivityCategoryDto> getAllCategories() {
+    public List<CategoryDto> getAllCategories() {
         return categoryService.getAllCategories();
     }
 
     @RolesAllowed({ADMIN, USER})
     @GetMapping("/{id}")
-    public ActivityCategoryDto getCategoryById(@PathVariable UUID id) {
+    public CategoryDto getCategoryById(@PathVariable UUID id) {
         return categoryService.getCategoryById(id);
     }
 
@@ -43,7 +43,7 @@ public class CategoryController {
 
     @RolesAllowed({ADMIN, USER})
     @PostMapping
-    public ActivityCategoryDto saveNewCategory(@Valid @RequestBody NewActivityCategoryDto category) {
+    public CategoryDto saveNewCategory(@Valid @RequestBody NewCategoryDto category) {
         return categoryService.saveNewCategory(category);
     }
 
@@ -55,7 +55,7 @@ public class CategoryController {
 
     @RolesAllowed({ADMIN, USER})
     @PutMapping("/{id}")
-    public ActivityCategoryDto updateCategory(@PathVariable UUID id, @RequestBody NewActivityCategoryDto activityCategoryDto) {
+    public CategoryDto updateCategory(@PathVariable UUID id, @RequestBody NewCategoryDto activityCategoryDto) {
         return categoryService.updateCategory(id, activityCategoryDto);
     }
 

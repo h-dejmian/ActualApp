@@ -1,9 +1,9 @@
 package com.example.ActualApp.mapper;
 
 import com.example.ActualApp.auth.user.User;
-import com.example.ActualApp.controller.dto.ActivityCategoryDto;
+import com.example.ActualApp.controller.dto.CategoryDto;
 import com.example.ActualApp.controller.dto.NameAndCountDto;
-import com.example.ActualApp.controller.dto.NewActivityCategoryDto;
+import com.example.ActualApp.controller.dto.NewCategoryDto;
 import com.example.ActualApp.repository.entity.Activity;
 import com.example.ActualApp.repository.entity.Category;
 import org.springframework.stereotype.Component;
@@ -11,11 +11,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class ActivityCategoryMapper {
-    private static final int DEFAULT_PRIORITY = 3;
+public class CategoryMapper {
 
-    public ActivityCategoryDto mapActivityCategoryToDto(Category category) {
-        return new ActivityCategoryDto(
+    public CategoryDto mapActivityCategoryToDto(Category category) {
+        return new CategoryDto(
                 category.getId(),
                 category.getName(),
                 category.getPriority(),
@@ -28,7 +27,7 @@ public class ActivityCategoryMapper {
         return category.getActivities().stream().map(Activity::getTimeSpentInMinutes).mapToLong(Long::longValue).sum();
     }
 
-    public Category mapNewActivityCategoryDtoToCategory(NewActivityCategoryDto category, User user) {
+    public Category mapNewActivityCategoryDtoToCategory(NewCategoryDto category, User user) {
         return new Category(
                 category.name(),
                 category.priority(),

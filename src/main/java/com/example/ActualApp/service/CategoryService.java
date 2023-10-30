@@ -3,7 +3,7 @@ package com.example.ActualApp.service;
 import com.example.ActualApp.auth.user.User;
 import com.example.ActualApp.auth.user.UserRepository;
 import com.example.ActualApp.controller.dto.*;
-import com.example.ActualApp.mapper.ActivityCategoryMapper;
+import com.example.ActualApp.mapper.CategoryMapper;
 import com.example.ActualApp.repository.CategoryRepository;
 import com.example.ActualApp.repository.entity.Category;
 import org.springframework.http.HttpStatus;
@@ -18,22 +18,22 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
-    private final ActivityCategoryMapper categoryMapper;
+    private final CategoryMapper categoryMapper;
 
-    public CategoryService(CategoryRepository categoryRepository, UserRepository userRepository, ActivityCategoryMapper categoryMapper) {
+    public CategoryService(CategoryRepository categoryRepository, UserRepository userRepository, CategoryMapper categoryMapper) {
         this.categoryRepository = categoryRepository;
         this.userRepository = userRepository;
         this.categoryMapper = categoryMapper;
     }
 
-    public List<ActivityCategoryDto> getAllCategories() {
+    public List<CategoryDto> getAllCategories() {
         List<Category> categories = categoryRepository.findAll();
         return categoryRepository.findAll().stream()
                 .map(categoryMapper::mapActivityCategoryToDto)
                 .toList();
     }
 
-    public ActivityCategoryDto getCategoryById(UUID id) {
+    public CategoryDto getCategoryById(UUID id) {
         return categoryRepository.findById(id)
                 .map(categoryMapper::mapActivityCategoryToDto)
                 .orElseThrow();
@@ -43,7 +43,7 @@ public class CategoryService {
         return categoryMapper.mapToNameAndCountDto(categoryRepository.getCategoriesWithTimeSpent());
     }
 
-    public ActivityCategoryDto saveNewCategory(NewActivityCategoryDto newCategory) {
+    public CategoryDto saveNewCategory(NewCategoryDto newCategory) {
         User user = userRepository.findById(newCategory.user_Id())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         Category category = categoryRepository.save(categoryMapper.mapNewActivityCategoryDtoToCategory(newCategory, user));
@@ -54,7 +54,7 @@ public class CategoryService {
         categoryRepository.deleteById(id);
     }
 
-    public ActivityCategoryDto updateCategory(UUID id, NewActivityCategoryDto activityCategoryDto) {
+    public CategoryDto updateCategory(UUID id, NewCategoryDto activityCategoryDto) {
         Category categoryToUpdate = categoryRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
