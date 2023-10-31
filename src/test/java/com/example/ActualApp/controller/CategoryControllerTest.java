@@ -83,12 +83,10 @@ class CategoryControllerTest {
     @Test
     void shouldReturnNewCategory() throws Exception {
         //Given
-        String id = "13a629b4-0bc2-4437-bc73-5914670c1a24";
+        String id = "fd70909e-fc1b-4313-95d7-d07da61d90d0";
         CategoryDto categoryDto = new CategoryDto(UUID.fromString(id), "Test Category", 3, 0, 0 );
         NewCategoryDto newCategoryDto = new NewCategoryDto("Test Category", 3, UUID.fromString(id));
-        User user = new User("Adam", "password");
         Mockito.when(categoryService.saveNewCategory(newCategoryDto)).thenReturn(categoryDto);
-        Mockito.when(userRepository.findById(UUID.fromString(id))).thenReturn(Optional.of(user));
 
         //When
         var result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/categories")
@@ -96,16 +94,16 @@ class CategoryControllerTest {
                 .content("""
                         {
                                 "name" : "Test Category",
-                                "priority": 3,                      
-                                "user_Id": "903f891f-4c2f-4f52-9768-bd499f35b02d"              
+                                "priority": 3,                     
+                                "user_Id": "fd70909e-fc1b-4313-95d7-d07da61d90d0"              
                         }
                         """));
 
         //Then
         result.andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(categoryDto.id().toString()))
                 .andExpect(jsonPath("$.name").value(categoryDto.name()))
                 .andExpect(jsonPath("$.priority").value(categoryDto.priority()))
-                .andExpect(jsonPath("$.id").value(categoryDto.id()))
                 .andExpect(jsonPath("$.activitiesNumber").value(0))
                 .andExpect(jsonPath("$.timeSpentInMinutes").value(0));
 

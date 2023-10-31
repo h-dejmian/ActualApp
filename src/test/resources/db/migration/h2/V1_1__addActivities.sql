@@ -1,1 +1,2 @@
-INSERT INTO activity(id, description, time_spent_in_minutes, date, completed, category_id ) VALUES('201bc653-d180-488a-a945-558c47e202b6','TestCompletedFalse', 60, '2023-09-04', false, 'babdef25-ee00-4f8b-a454-dbe1b77140b5');
+INSERT INTO activity(id, description, time_spent_in_minutes, date, completed, category_id, user_id )
+VALUES('201bc653-d180-488a-a945-558c47e202b6','TestCompletedFalse', 60, '2023-09-04', false, 'd37b09cb-d8c1-4873-bdae-382902834855', '2f85b8fe-2888-4afb-b022-3d34ee604192');

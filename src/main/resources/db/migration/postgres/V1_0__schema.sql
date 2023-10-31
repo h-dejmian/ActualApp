@@ -42,7 +42,7 @@ DROP TABLE IF EXISTS activity;
 CREATE TABLE activity
 (
     id                      UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    description              VARCHAR(50) NOT NULL UNIQUE,
+    description              VARCHAR(50) NOT NULL,
     time_spent_in_minutes   BIGINT NOT NULL,
     category_id             UUID,
     date                    DATE NOT NULL,
