@@ -37,10 +37,13 @@ public class Category {
     @JsonBackReference
     @ManyToOne
     private User user;
+    @Enumerated(EnumType.STRING)
+    private CategoryType categoryType;
 
-    public Category(String name, int priority, User user) {
+    public Category(String name, int priority, User user, CategoryType categoryType) {
         this.name = name;
         this.priority = priority;
         this.user = user;
+        this.categoryType = categoryType;
     }
 }

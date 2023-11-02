@@ -44,7 +44,7 @@ public class CategoryService {
     }
 
     public CategoryDto saveNewCategory(NewCategoryDto newCategory) {
-        User user = userRepository.findById(newCategory.user_Id())
+        User user = userRepository.findById(newCategory.userId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         Category category = categoryRepository.save(categoryMapper.mapNewActivityCategoryDtoToCategory(newCategory, user));
         return categoryMapper.mapActivityCategoryToDto(category);

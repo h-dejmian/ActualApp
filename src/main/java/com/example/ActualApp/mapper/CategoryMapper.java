@@ -31,7 +31,8 @@ public class CategoryMapper {
         return new Category(
                 category.name(),
                 category.priority(),
-                user
+                user,
+                category.categoryType()
         );
     }
 

@@ -12,6 +12,7 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Getter
@@ -50,4 +51,6 @@ public class Activity {
     @JsonBackReference
     @ManyToOne
     private User user;
+    private LocalTime startTime;
+    private LocalTime endTime;
 }

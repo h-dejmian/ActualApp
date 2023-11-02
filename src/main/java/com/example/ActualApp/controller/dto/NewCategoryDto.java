@@ -1,5 +1,6 @@
 package com.example.ActualApp.controller.dto;
 
+import com.example.ActualApp.repository.entity.CategoryType;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
@@ -10,6 +11,7 @@ public record NewCategoryDto(
         String name,
         @Range(min = 1, max = 7, message = "Priority should be number between 1 and 7")
         int priority,
-        UUID user_Id
+        UUID userId,
+        CategoryType categoryType
 ) {
 }
