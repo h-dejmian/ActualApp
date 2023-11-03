@@ -1,6 +1,7 @@
 package com.example.ActualApp.controller;
 
 import com.example.ActualApp.controller.dto.*;
+import com.example.ActualApp.repository.entity.CategoryType;
 import com.example.ActualApp.service.CategoryService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
@@ -27,6 +28,18 @@ public class CategoryController {
     @GetMapping
     public List<CategoryDto> getAllCategories() {
         return categoryService.getAllCategories();
+    }
+
+    @RolesAllowed({ADMIN, USER})
+    @GetMapping("/regular")
+    public List<CategoryDto> getAllRegularCategories() {
+        return categoryService.getAllCategoriesByType(CategoryType.REGULAR);
+    }
+
+    @RolesAllowed({ADMIN, USER})
+    @GetMapping("/todo")
+    public List<CategoryDto> getAllToDoCategories() {
+        return categoryService.getAllCategoriesByType(CategoryType.TODO);
     }
 
     @RolesAllowed({ADMIN, USER})

@@ -6,6 +6,7 @@ import com.example.ActualApp.controller.dto.*;
 import com.example.ActualApp.mapper.CategoryMapper;
 import com.example.ActualApp.repository.CategoryRepository;
 import com.example.ActualApp.repository.entity.Category;
+import com.example.ActualApp.repository.entity.CategoryType;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -29,6 +30,12 @@ public class CategoryService {
     public List<CategoryDto> getAllCategories() {
         List<Category> categories = categoryRepository.findAll();
         return categoryRepository.findAll().stream()
+                .map(categoryMapper::mapActivityCategoryToDto)
+                .toList();
+    }
+
+    public List<CategoryDto> getAllCategoriesByType(CategoryType type) {
+        return categoryRepository.findAllByCategoryType(type).stream()
                 .map(categoryMapper::mapActivityCategoryToDto)
                 .toList();
     }
