@@ -3,6 +3,7 @@ package com.example.ActualApp.controller;
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NameAndCountDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
+import com.example.ActualApp.repository.entity.CategoryType;
 import com.example.ActualApp.service.ActivityService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
@@ -68,10 +69,22 @@ public class ActivityController {
         return activityService.getActivitiesByCategory(categoryId);
     }
 
+//    @RolesAllowed({ADMIN, USER})
+//    @PostMapping
+//    public ActivityDto createNewActivity(@Valid @RequestBody NewActivityDto newActivity) {
+//        return activityService.saveNewActivity(newActivity);
+//    }
+
     @RolesAllowed({ADMIN, USER})
-    @PostMapping
-    public ActivityDto createNewActivity(@Valid @RequestBody NewActivityDto newActivity) {
-        return activityService.saveNewActivity(newActivity);
+    @PostMapping("/regular")
+    public ActivityDto createRegularActivity(@Valid @RequestBody NewActivityDto newActivity) {
+        return activityService.saveNewActivity(newActivity, CategoryType.REGULAR);
+    }
+
+    @RolesAllowed({ADMIN, USER})
+    @PostMapping("/todo")
+    public ActivityDto createToDoActivity(@Valid @RequestBody NewActivityDto newActivity) {
+        return activityService.saveNewActivity(newActivity, CategoryType.TODO);
     }
 
     @RolesAllowed({ADMIN, USER})

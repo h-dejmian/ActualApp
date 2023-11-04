@@ -22,6 +22,8 @@ public interface CategoryRepository extends JpaRepository<Category, UUID> {
 
     Optional<Category> findByName(String name);
 
+    Optional<Category> findByNameAndCategoryType(String name, CategoryType categoryType);
+
     @Query("SELECT ac.name, SUM(a.timeSpentInMinutes) as sum FROM Category ac " +
             "JOIN Activity a ON ac.id = a.category.id " +
             "GROUP BY ac.name " +

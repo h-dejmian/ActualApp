@@ -10,6 +10,7 @@ import com.example.ActualApp.repository.CategoryRepository;
 import com.example.ActualApp.repository.ActivityRepository;
 import com.example.ActualApp.repository.entity.Activity;
 import com.example.ActualApp.repository.entity.Category;
+import com.example.ActualApp.repository.entity.CategoryType;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -62,7 +63,7 @@ public class ActivityService {
     }
 
     public List<ActivityDto> getActivitiesByDate(String date, UUID user_id) {
-        List<Activity> activities = activityRepository.findAllByDateAndUser_Id(LocalDate.parse(date), user_id);
+        List<Activity> activities = activityRepository.findAllRegularByDateAndUser_Id(LocalDate.parse(date), user_id);
         return activities.stream()
                 .map(activityMapper::mapActivityToDto)
                 .toList();
@@ -76,8 +77,8 @@ public class ActivityService {
         return activityMapper.mapToNameAndCountDto(activityRepository.getMostOftenNotCompletedActivity());
     }
 
-    public ActivityDto saveNewActivity(NewActivityDto newActivity) {
-        Category category = categoryRepository.findByName(newActivity.categoryName())
+    public ActivityDto saveNewActivity(NewActivityDto newActivity, CategoryType type) {
+        Category category = categoryRepository.findByNameAndCategoryType(newActivity.categoryName(), type)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         User user = userRepository.findById(newActivity.user_Id())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
