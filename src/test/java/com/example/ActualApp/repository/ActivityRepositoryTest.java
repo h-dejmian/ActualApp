@@ -4,7 +4,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ class ActivityRepositoryTest {
     @Test
     void shouldReturnActivitiesByTime() {
         //When
-        List<List<Object>> actual = activityRepository.getActivitiesByTime();
+        List<List<Object>> actual = activityRepository.getActivitiesByTimeAndUserId();
         List<Object> innerList =  actual.get(0);
 
         //Then

@@ -96,7 +96,7 @@ class ActivityControllerTest {
         ActivityDto activityDto = new ActivityDto(UUID.randomUUID(), "Test description", 120,
                 LocalDate.of(2023, 10, 10), true, "Test Category");
 
-        Mockito.when(activityService.saveNewActivity(newActivityDto)).thenReturn(activityDto);
+        Mockito.when(activityService.saveNewActivity(newActivityDto, "regular")).thenReturn(activityDto);
 
         //When
         var response = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/activities")

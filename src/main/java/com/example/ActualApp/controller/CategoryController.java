@@ -25,21 +25,13 @@ public class CategoryController {
     }
 
     @RolesAllowed({ADMIN, USER})
-    @GetMapping
-    public List<CategoryDto> getAllCategories() {
-        return categoryService.getAllCategories();
-    }
-
-    @RolesAllowed({ADMIN, USER})
-    @GetMapping("/regular")
-    public List<CategoryDto> getAllRegularCategories() {
-        return categoryService.getAllCategoriesByType(CategoryType.REGULAR);
-    }
-
-    @RolesAllowed({ADMIN, USER})
-    @GetMapping("/todo")
-    public List<CategoryDto> getAllToDoCategories() {
-        return categoryService.getAllCategoriesByType(CategoryType.TODO);
+    @GetMapping(params={"type", "userId"})
+    public List<CategoryDto> getAllCategories(@RequestParam String type, @RequestParam UUID userId) {
+        if(type == null || userId == null) {
+            return categoryService.getAllCategories();
+        }
+        CategoryType categoryType = Enum.valueOf(CategoryType.class, type.toUpperCase());
+        return categoryService.getAllCategoriesByTypeAndUserId(categoryType, userId);
     }
 
     @RolesAllowed({ADMIN, USER})

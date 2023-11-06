@@ -34,9 +34,9 @@ public class ActivityController {
     }
 
     @RolesAllowed({ADMIN, USER})
-    @GetMapping(params = {"groupByTime"})
-    public List<NameAndCountDto> getActivitiesByTime() {
-         return activityService.getActivitiesByTimeSpent();
+    @GetMapping(params = {"groupByTime", "userId"})
+    public List<NameAndCountDto> getActivitiesByTime(@RequestParam UUID userId) {
+         return activityService.getActivitiesByTimeSpent(userId);
     }
 
     @RolesAllowed({ADMIN, USER})
@@ -69,22 +69,10 @@ public class ActivityController {
         return activityService.getActivitiesByCategory(categoryId);
     }
 
-//    @RolesAllowed({ADMIN, USER})
-//    @PostMapping
-//    public ActivityDto createNewActivity(@Valid @RequestBody NewActivityDto newActivity) {
-//        return activityService.saveNewActivity(newActivity);
-//    }
-
     @RolesAllowed({ADMIN, USER})
-    @PostMapping("/regular")
-    public ActivityDto createRegularActivity(@Valid @RequestBody NewActivityDto newActivity) {
-        return activityService.saveNewActivity(newActivity, CategoryType.REGULAR);
-    }
-
-    @RolesAllowed({ADMIN, USER})
-    @PostMapping("/todo")
-    public ActivityDto createToDoActivity(@Valid @RequestBody NewActivityDto newActivity) {
-        return activityService.saveNewActivity(newActivity, CategoryType.TODO);
+    @PostMapping(params={"type"})
+    public ActivityDto createNewActivity(@Valid @RequestBody NewActivityDto newActivity, @RequestParam String type) {
+        return activityService.saveNewActivity(newActivity, type);
     }
 
     @RolesAllowed({ADMIN, USER})

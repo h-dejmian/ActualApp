@@ -16,11 +16,14 @@ public interface ActivityRepository extends JpaRepository<Activity, UUID> {
 
     @Query("SELECT a FROM Activity a")
     List<Activity> findAllBy(Pageable pageable);
-    @Query("SELECT a FROM Activity a WHERE a.date = :date AND a.user.id = :user_Id AND a.category.categoryType = 'REGULAR'")
-    List<Activity> findAllRegularByDateAndUser_Id(@Param("date") LocalDate date, UUID user_Id);
+    @Query("SELECT a FROM Activity a WHERE a.date = :date AND a.user.id = :userId AND a.category.categoryType = 'REGULAR'")
+    List<Activity> findAllRegularByDateAndUserId(@Param("date") LocalDate date, UUID userId);
 
-    @Query("SELECT a.description, SUM(a.timeSpentInMinutes) as sum FROM Activity a GROUP BY a.description ORDER BY sum DESC ")
-    List<List<Object>> getActivitiesByTime();
+    @Query("SELECT a.description, SUM(a.timeSpentInMinutes) as sum FROM Activity a " +
+            "WHERE a.category.categoryType = 'REGULAR' AND a.user.id = :userId " +
+            "GROUP BY a.description " +
+            "ORDER BY sum DESC")
+    List<List<Object>> getActivitiesByTimeAndUserId(UUID userId);
 
     @Query("SELECT a.description, COUNT(1) FROM Activity a " +
             "WHERE a.completed=false " +

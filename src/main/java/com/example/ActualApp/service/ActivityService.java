@@ -63,22 +63,24 @@ public class ActivityService {
     }
 
     public List<ActivityDto> getActivitiesByDate(String date, UUID user_id) {
-        List<Activity> activities = activityRepository.findAllRegularByDateAndUser_Id(LocalDate.parse(date), user_id);
+        List<Activity> activities = activityRepository.findAllRegularByDateAndUserId(LocalDate.parse(date), user_id);
         return activities.stream()
                 .map(activityMapper::mapActivityToDto)
                 .toList();
     }
 
-    public List<NameAndCountDto> getActivitiesByTimeSpent() {
-        return activityMapper.mapToNameAndCountDto(activityRepository.getActivitiesByTime());
+    public List<NameAndCountDto> getActivitiesByTimeSpent(UUID userId) {
+        return activityMapper.mapToNameAndCountDto(activityRepository.getActivitiesByTimeAndUserId(userId));
     }
 
     public List<NameAndCountDto> getMostOftenNotCompletedActivity() {
         return activityMapper.mapToNameAndCountDto(activityRepository.getMostOftenNotCompletedActivity());
     }
 
-    public ActivityDto saveNewActivity(NewActivityDto newActivity, CategoryType type) {
-        Category category = categoryRepository.findByNameAndCategoryType(newActivity.categoryName(), type)
+    public ActivityDto saveNewActivity(NewActivityDto newActivity, String type) {
+        CategoryType categoryType = Enum.valueOf(CategoryType.class, type.toUpperCase());
+
+        Category category = categoryRepository.findByNameAndCategoryType(newActivity.categoryName(), categoryType)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         User user = userRepository.findById(newActivity.user_Id())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

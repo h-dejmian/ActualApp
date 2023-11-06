@@ -28,14 +28,13 @@ public class CategoryService {
     }
 
     public List<CategoryDto> getAllCategories() {
-        List<Category> categories = categoryRepository.findAll();
         return categoryRepository.findAll().stream()
                 .map(categoryMapper::mapActivityCategoryToDto)
                 .toList();
     }
 
-    public List<CategoryDto> getAllCategoriesByType(CategoryType type) {
-        return categoryRepository.findAllByCategoryType(type).stream()
+    public List<CategoryDto> getAllCategoriesByTypeAndUserId(CategoryType type, UUID userId) {
+        return categoryRepository.findAllByCategoryTypeAndUserId(type, userId).stream()
                 .map(categoryMapper::mapActivityCategoryToDto)
                 .toList();
     }
