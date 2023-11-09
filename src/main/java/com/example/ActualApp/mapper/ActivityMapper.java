@@ -21,7 +21,9 @@ public class ActivityMapper {
                 entity.getTimeSpentInMinutes(),
                 entity.getDate(),
                 entity.isCompleted(),
-                entity.getCategory().getName()
+                entity.getCategory().getName(),
+                entity.getStartTime(),
+                entity.getEndTime()
         );
     }
 
@@ -56,10 +58,4 @@ public class ActivityMapper {
                 .map(li -> new NameAndCountDto((String)li.get(0), (long)li.get(1)))
                 .toList();
     }
-
-//    private LocalTime parseTime(String time) {
-//        LocalTime t = LocalTime.parse(time);
-//        return t;
-//    }
-
 }

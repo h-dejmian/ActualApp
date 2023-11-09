@@ -16,14 +16,19 @@ public interface ActivityRepository extends JpaRepository<Activity, UUID> {
 
     @Query("SELECT a FROM Activity a")
     List<Activity> findAllBy(Pageable pageable);
-    @Query("SELECT a FROM Activity a WHERE a.date = :date AND a.user.id = :userId AND a.startTime = null AND a.endTime = null AND a.category.categoryType = 'REGULAR'")
+    @Query("SELECT a FROM Activity a WHERE a.date = :date " +
+                                    "AND a.user.id = :userId " +
+                                    "AND a.startTime = null " +
+                                    "AND a.endTime = null " +
+                                    "AND a.category.categoryType = 'REGULAR'")
     List<Activity> findAllRegularByDateAndUserId(@Param("date") LocalDate date, @Param("userId") UUID userId);
 
     @Query("SELECT a FROM Activity a WHERE a.startTime IS NOT null " +
                                     "AND a.endTime IS NOT null " +
                                     "AND a.date = :date " +
                                     "AND a.user.id = :userId " +
-                                    "AND a.category.categoryType = 'REGULAR'")
+                                    "AND a.category.categoryType = 'REGULAR' " +
+                                    "ORDER BY a.startTime")
     List<Activity> findAllWithTimeRangeByDate(@Param("date") LocalDate date, @Param("userId") UUID userId);
 
     @Query("SELECT a.description, SUM(a.timeSpentInMinutes) as sum FROM Activity a " +

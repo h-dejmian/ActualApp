@@ -1,6 +1,7 @@
 package com.example.ActualApp.controller.dto;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 public record ActivityDto (
@@ -9,6 +10,8 @@ public record ActivityDto (
          long timeSpentInMinutes,
          LocalDate date,
          boolean completed,
-         String categoryName
+         String categoryName,
+         LocalTime startTime,
+         LocalTime endTime
 ) {
 }

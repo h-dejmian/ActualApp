@@ -35,6 +35,12 @@ public class ActivityController {
     }
 
     @RolesAllowed({ADMIN, USER})
+    @GetMapping(params = {"userId", "date"})
+    public List<ActivityDto> getActivitiesByDate(@RequestParam UUID userId, @RequestParam String date) {
+        return activityService.getActivitiesByDate(date, userId);
+    }
+
+    @RolesAllowed({ADMIN, USER})
     @GetMapping(params={"planned", "userId", "date"})
     public List<PlannedActivityDto> getAllActivitiesWithTimeRange(@RequestParam UUID userId, @RequestParam LocalDate date) {
         return activityService.getActivitiesWithTimeRangeByDate(date, userId);
@@ -50,12 +56,6 @@ public class ActivityController {
     @GetMapping(params = {"mostOftenNotCompleted"})
     public List<NameAndCountDto> getMostOftenNotCompletedActivity() {
         return activityService.getMostOftenNotCompletedActivity();
-    }
-
-    @RolesAllowed({ADMIN, USER})
-    @GetMapping(params = {"userId", "date"})
-    public List<ActivityDto> getActivitiesByDate(@RequestParam UUID userId, @RequestParam String date) {
-        return activityService.getActivitiesByDate(date, userId);
     }
 
     @RolesAllowed({ADMIN, USER})
