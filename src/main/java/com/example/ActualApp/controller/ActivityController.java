@@ -3,13 +3,14 @@ package com.example.ActualApp.controller;
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NameAndCountDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
-import com.example.ActualApp.repository.entity.CategoryType;
+import com.example.ActualApp.controller.dto.PlannedActivityDto;
 import com.example.ActualApp.service.ActivityService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,6 +35,12 @@ public class ActivityController {
     }
 
     @RolesAllowed({ADMIN, USER})
+    @GetMapping(params={"planned", "userId", "date"})
+    public List<PlannedActivityDto> getAllActivitiesWithTimeRange(@RequestParam UUID userId, @RequestParam LocalDate date) {
+        return activityService.getActivitiesWithTimeRangeByDate(date, userId);
+    }
+
+    @RolesAllowed({ADMIN, USER})
     @GetMapping(params = {"groupByTime", "userId"})
     public List<NameAndCountDto> getActivitiesByTime(@RequestParam UUID userId) {
          return activityService.getActivitiesByTimeSpent(userId);
@@ -46,9 +53,9 @@ public class ActivityController {
     }
 
     @RolesAllowed({ADMIN, USER})
-    @GetMapping(value = "/{user_id}", params = {"date"})
-    public List<ActivityDto> getActivitiesByDate(@PathVariable UUID user_id, @RequestParam String date) {
-        return activityService.getActivitiesByDate(date, user_id);
+    @GetMapping(params = {"userId", "date"})
+    public List<ActivityDto> getActivitiesByDate(@RequestParam UUID userId, @RequestParam String date) {
+        return activityService.getActivitiesByDate(date, userId);
     }
 
     @RolesAllowed({ADMIN, USER})

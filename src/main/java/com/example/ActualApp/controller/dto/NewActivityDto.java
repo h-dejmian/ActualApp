@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Range;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 public record NewActivityDto(
@@ -17,6 +18,8 @@ public record NewActivityDto(
         LocalDate date,
         boolean completed,
         String categoryName,
-        UUID user_Id
+        UUID user_Id,
+        LocalTime startTime,
+        LocalTime endTime
 ) {
 }

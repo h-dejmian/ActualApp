@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -22,13 +23,15 @@ import java.util.UUID;
 public class Activity {
     private static final int MINUTES_IN_A_DAY = 1440;
 
-    public Activity(String description, long timeSpentInMinutes, @NotNull LocalDate date, boolean completed, Category category, User user) {
+    public Activity(String description, long timeSpentInMinutes, @NotNull LocalDate date, boolean completed, Category category, User user, LocalTime startTime, LocalTime endTime) {
         this.description = description;
         this.timeSpentInMinutes = timeSpentInMinutes;
         this.date = date;
         this.completed = completed;
         this.category = category;
         this.user = user;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     @Id

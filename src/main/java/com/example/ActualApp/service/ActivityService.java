@@ -5,6 +5,7 @@ import com.example.ActualApp.auth.user.UserRepository;
 import com.example.ActualApp.controller.dto.ActivityDto;
 import com.example.ActualApp.controller.dto.NameAndCountDto;
 import com.example.ActualApp.controller.dto.NewActivityDto;
+import com.example.ActualApp.controller.dto.PlannedActivityDto;
 import com.example.ActualApp.mapper.ActivityMapper;
 import com.example.ActualApp.repository.CategoryRepository;
 import com.example.ActualApp.repository.ActivityRepository;
@@ -45,6 +46,12 @@ public class ActivityService {
     public List<ActivityDto> getAllActivities(Pageable pageable) {
         return activityRepository.findAllBy(pageable).stream()
                 .map(activityMapper::mapActivityToDto)
+                .toList();
+    }
+
+    public List<PlannedActivityDto> getActivitiesWithTimeRangeByDate(LocalDate date, UUID userId) {
+        return activityRepository.findAllWithTimeRangeByDate(date, userId).stream()
+                .map(activityMapper::mapPlannedActivityToDto)
                 .toList();
     }
 
