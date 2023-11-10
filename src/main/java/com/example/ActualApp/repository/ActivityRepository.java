@@ -33,6 +33,8 @@ public interface ActivityRepository extends JpaRepository<Activity, UUID> {
 
     @Query("SELECT a.description, SUM(a.timeSpentInMinutes) as sum FROM Activity a " +
             "WHERE a.category.categoryType = 'REGULAR' AND a.user.id = :userId " +
+            "AND a.startTime IS NULL " +
+            "AND a.endTime IS NULL " +
             "GROUP BY a.description " +
             "ORDER BY sum DESC")
     List<List<Object>> getActivitiesByTimeAndUserId(UUID userId);

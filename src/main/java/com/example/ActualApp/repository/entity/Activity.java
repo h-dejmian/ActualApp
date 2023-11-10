@@ -54,8 +54,8 @@ public class Activity {
     @JsonBackReference
     @ManyToOne
     private User user;
-
+    @Setter
     private LocalTime startTime;
-
+    @Setter
     private LocalTime endTime;
 }

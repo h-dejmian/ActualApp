@@ -118,6 +118,8 @@ public class ActivityService {
         activityToUpdate.setDescription(activity.description());
         activityToUpdate.setTimeSpentInMinutes(activity.timeSpentInMinutes());
         activityToUpdate.setCategory(category);
+        activityToUpdate.setStartTime(activity.startTime());
+        activityToUpdate.setEndTime(activity.endTime());
 
         return activityMapper.mapActivityToDto(activityRepository.save(activityToUpdate));
     }
