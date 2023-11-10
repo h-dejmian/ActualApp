@@ -1,4 +1,4 @@
-# ActualApp
+# ActualApp (backend)
 Web application to control daily activities and organize time
 
 # Description
