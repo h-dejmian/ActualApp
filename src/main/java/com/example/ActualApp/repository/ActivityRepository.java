@@ -31,10 +31,16 @@ public interface ActivityRepository extends JpaRepository<Activity, UUID> {
                                     "ORDER BY a.startTime")
     List<Activity> findAllWithTimeRangeByDate(@Param("date") LocalDate date, @Param("userId") UUID userId);
 
+    @Query("SELECT a FROM Activity a WHERE a.startTime IS NOT null " +
+                                    "AND a.endTime IS NOT null " +
+                                    "AND a.category.categoryType = 'REGULAR' ")
+    List<Activity> findAllWithTimeRange();
+
     @Query("SELECT a.description, SUM(a.timeSpentInMinutes) as sum FROM Activity a " +
             "WHERE a.category.categoryType = 'REGULAR' AND a.user.id = :userId " +
             "AND a.startTime IS NULL " +
             "AND a.endTime IS NULL " +
+            "AND a.completed = true " +
             "GROUP BY a.description " +
             "ORDER BY sum DESC")
     List<List<Object>> getActivitiesByTimeAndUserId(UUID userId);

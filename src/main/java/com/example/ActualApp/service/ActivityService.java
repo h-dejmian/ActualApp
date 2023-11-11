@@ -12,12 +12,16 @@ import com.example.ActualApp.repository.ActivityRepository;
 import com.example.ActualApp.repository.entity.Activity;
 import com.example.ActualApp.repository.entity.Category;
 import com.example.ActualApp.repository.entity.CategoryType;
+import jakarta.annotation.PostConstruct;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -123,5 +127,27 @@ public class ActivityService {
         activityToUpdate.setEndTime(activity.endTime());
 
         return activityMapper.mapActivityToDto(activityRepository.save(activityToUpdate));
+    }
+
+    @PostConstruct
+    public void changedOutdatedActivitiesIntoRegular() {
+        List<Activity> activities = activityRepository.findAllWithTimeRange();
+        List<Activity> toUpdate = new LinkedList<>();
+        for (Activity activity : activities) {
+            if(activity.getDate().isBefore(LocalDate.now())) {
+                int activityTime = getActivityTimeFromRange(activity.getStartTime(), activity.getEndTime());
+                activity.setTimeSpentInMinutes(activityTime);
+                activity.setStartTime(null);
+                activity.setEndTime(null);
+                toUpdate.add(activity);
+            }
+        }
+        activityRepository.saveAll(toUpdate);
+    }
+
+    public int getActivityTimeFromRange(LocalTime start, LocalTime end) {
+        int startTimeInMinutes = start.getHour() * 60 + start.getMinute();
+        int endTimeInMinutes = end.getHour() * 60 + end.getMinute();
+        return endTimeInMinutes - startTimeInMinutes;
     }
 }
