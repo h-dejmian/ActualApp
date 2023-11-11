@@ -109,10 +109,11 @@ public class ActivityService {
     }
 
 
-    public ActivityDto updateActivity(UUID id, ActivityDto activity) {
+    public ActivityDto updateActivity(UUID id, ActivityDto activity, String type) {
+        CategoryType categoryType = Enum.valueOf(CategoryType.class, type.toUpperCase());
         Activity activityToUpdate = activityRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        Category category = categoryRepository.findByName(activity.categoryName())
+        Category category = categoryRepository.findByNameAndCategoryType(activity.categoryName(), categoryType)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         activityToUpdate.setDescription(activity.description());

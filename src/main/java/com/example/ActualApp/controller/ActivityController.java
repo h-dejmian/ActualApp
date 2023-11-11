@@ -90,9 +90,9 @@ public class ActivityController {
 
 
     @RolesAllowed({ADMIN, USER})
-    @PutMapping(value = "/{id}")
-    public ActivityDto updateActivity(@PathVariable UUID id, @RequestBody ActivityDto activity) {
-        return activityService.updateActivity(id, activity);
+    @PutMapping(value = "/{id}", params={"type"})
+    public ActivityDto updateActivity(@PathVariable UUID id, @RequestBody ActivityDto activity, @RequestParam String type) {
+        return activityService.updateActivity(id, activity, type);
     }
 
     @RolesAllowed({ADMIN, USER})
