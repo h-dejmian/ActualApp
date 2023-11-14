@@ -4,6 +4,7 @@ import com.example.ActualApp.auth.user.User;
 import com.example.ActualApp.auth.user.UserRepository;
 import com.example.ActualApp.controller.dto.CategoryDto;
 import com.example.ActualApp.controller.dto.NewCategoryDto;
+import com.example.ActualApp.repository.entity.CategoryType;
 import com.example.ActualApp.service.CategoryService;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
@@ -59,16 +60,16 @@ class CategoryControllerTest {
     }
 
     @Test
-    void shouldReturnAllActivities() throws Exception {
+    void shouldReturnAllCategories() throws Exception {
         //Given
         List<CategoryDto> categories = Instancio.ofList(CategoryDto.class)
                 .size(1)
                 .create();
         CategoryDto categoryDto = categories.get(0);
-        Mockito.when(categoryService.getAllCategories()).thenReturn(categories);
 
+        Mockito.when(categoryService.getAllCategoriesByTypeAndUserId(CategoryType.REGULAR, UUID.fromString("2f85b8fe-2888-4afb-b022-3d34ee604192"))).thenReturn(categories);
         //When
-        var response = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/categories"));
+        var response = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/categories?type=regular&userId=2f85b8fe-2888-4afb-b022-3d34ee604192"));
 
         //Then
         response.andExpect(status().isOk())
@@ -85,7 +86,7 @@ class CategoryControllerTest {
         //Given
         String id = "fd70909e-fc1b-4313-95d7-d07da61d90d0";
         CategoryDto categoryDto = new CategoryDto(UUID.fromString(id), "Test Category", 3, 0, 0 );
-        NewCategoryDto newCategoryDto = new NewCategoryDto("Test Category", 3, UUID.fromString(id));
+        NewCategoryDto newCategoryDto = new NewCategoryDto("Test Category", 3, UUID.fromString(id), CategoryType.REGULAR);
         Mockito.when(categoryService.saveNewCategory(newCategoryDto)).thenReturn(categoryDto);
 
         //When
@@ -94,8 +95,9 @@ class CategoryControllerTest {
                 .content("""
                         {
                                 "name" : "Test Category",
-                                "priority": 3,                     
-                                "user_Id": "fd70909e-fc1b-4313-95d7-d07da61d90d0"              
+                                "priority" : 3,                     
+                                "userId" : "fd70909e-fc1b-4313-95d7-d07da61d90d0",
+                                "categoryType" : "REGULAR"             
                         }
                         """));
 

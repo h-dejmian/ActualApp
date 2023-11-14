@@ -92,23 +92,25 @@ class ActivityControllerTest {
     void shouldReturnNewActivity() throws Exception {
         //Given
         NewActivityDto newActivityDto = new NewActivityDto("Test description", 120,
-                LocalDate.of(2023, 10, 10), true, "Test Category", UUID.fromString("fd70909e-fc1b-4313-95d7-d07da61d90d0"));
+                LocalDate.of(2023, 10, 10), true, "Test Category", UUID.fromString("fd70909e-fc1b-4313-95d7-d07da61d90d0"), null, null);
         ActivityDto activityDto = new ActivityDto(UUID.randomUUID(), "Test description", 120,
-                LocalDate.of(2023, 10, 10), true, "Test Category");
+                LocalDate.of(2023, 10, 10), true, "Test Category", null, null);
 
         Mockito.when(activityService.saveNewActivity(newActivityDto, "regular")).thenReturn(activityDto);
 
         //When
-        var response = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/activities")
+        var response = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/activities?type=regular")
                 .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                      "description" : "Test description",
+                                        "description" : "Test description",
                                         "timeSpentInMinutes" : 120,
                                         "date" : "2023-10-10",
                                         "completed" : true,
                                         "categoryName" : "Test Category",
-                                        "user_Id" : "fd70909e-fc1b-4313-95d7-d07da61d90d0"
+                                        "user_Id" : "fd70909e-fc1b-4313-95d7-d07da61d90d0",
+                                        "startTime" : null,
+                                        "endTime" : null
                                 }
                                 """));
 

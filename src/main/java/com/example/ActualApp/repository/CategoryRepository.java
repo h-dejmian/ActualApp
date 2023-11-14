@@ -18,9 +18,7 @@ public interface CategoryRepository extends JpaRepository<Category, UUID> {
     List<Category> findAll();
 
     @Query("SELECT ac FROM Category ac FULL OUTER JOIN FETCH ac.activities WHERE ac.categoryType = :type AND ac.user.id = :userId")
-    List<Category> findAllByCategoryTypeAndUserId(@Param("type") CategoryType type, UUID userId);
-
-    Optional<Category> findByName(String name);
+    List<Category> findAllByCategoryTypeAndUserId(@Param("type") CategoryType type, @Param("userId") UUID userId);
 
     Optional<Category> findByNameAndCategoryType(String name, CategoryType categoryType);
 

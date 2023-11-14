@@ -43,7 +43,7 @@ public interface ActivityRepository extends JpaRepository<Activity, UUID> {
             "AND a.completed = true " +
             "GROUP BY a.description " +
             "ORDER BY sum DESC")
-    List<List<Object>> getActivitiesByTimeAndUserId(UUID userId);
+    List<List<Object>> getActivitiesByTimeAndUserId(@Param("userId") UUID userId);
 
     @Query("SELECT a.description, COUNT(1) FROM Activity a " +
             "WHERE a.completed=false " +
