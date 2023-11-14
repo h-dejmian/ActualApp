@@ -23,10 +23,6 @@ public class CategoryMapper {
         );
     }
 
-    private static long getActivitiesTimeSum(Category category) {
-        return category.getActivities().stream().map(Activity::getTimeSpentInMinutes).mapToLong(Long::longValue).sum();
-    }
-
     public Category mapNewActivityCategoryDtoToCategory(NewCategoryDto category, User user) {
         return new Category(
                 category.name(),
@@ -40,6 +36,10 @@ public class CategoryMapper {
         return descAndTime.stream()
                 .map(li -> new NameAndCountDto((String)li.get(0), (long)li.get(1)))
                 .toList();
+    }
+
+    private static long getActivitiesTimeSum(Category category) {
+        return category.getActivities().stream().map(Activity::getTimeSpentInMinutes).mapToLong(Long::longValue).sum();
     }
 
 }

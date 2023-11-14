@@ -3,6 +3,7 @@ package com.example.ActualApp.mapper;
 import com.example.ActualApp.auth.user.User;
 import com.example.ActualApp.controller.dto.CategoryDto;
 import com.example.ActualApp.controller.dto.NewCategoryDto;
+import com.example.ActualApp.repository.entity.Activity;
 import com.example.ActualApp.repository.entity.Category;
 import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
