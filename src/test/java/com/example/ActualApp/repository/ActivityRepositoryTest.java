@@ -1,8 +1,6 @@
 package com.example.ActualApp.repository;
 
-import com.example.ActualApp.auth.user.User;
 import org.assertj.core.api.Assertions;
-import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

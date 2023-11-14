@@ -14,10 +14,10 @@ import java.util.UUID;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, UUID> {
     @Override
-    @Query("SELECT ac FROM Category ac FULL OUTER JOIN FETCH ac.activities")
+    @Query("SELECT ac FROM Category ac LEFT JOIN FETCH ac.activities")
     List<Category> findAll();
 
-    @Query("SELECT ac FROM Category ac FULL OUTER JOIN FETCH ac.activities WHERE ac.categoryType = :type AND ac.user.id = :userId")
+    @Query("SELECT ac FROM Category ac LEFT JOIN FETCH ac.activities WHERE ac.categoryType = :type AND ac.user.id = :userId")
     List<Category> findAllByCategoryTypeAndUserId(@Param("type") CategoryType type, @Param("userId") UUID userId);
 
     Optional<Category> findByNameAndCategoryType(String name, CategoryType categoryType);
