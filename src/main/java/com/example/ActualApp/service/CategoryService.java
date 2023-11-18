@@ -71,4 +71,8 @@ public class CategoryService {
 
         return categoryMapper.mapActivityCategoryToDto(categoryToUpdate);
     }
+
+    public List<NameAndCountDto> getCategoriesWithTimeByMonth(int month, UUID userId) {
+        return categoryMapper.mapToNameAndCountDto(categoryRepository.getCategoriesWithTimeSpentByMonth(month, userId));
+    }
 }
