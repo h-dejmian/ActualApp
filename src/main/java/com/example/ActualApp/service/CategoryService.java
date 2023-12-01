@@ -42,7 +42,7 @@ public class CategoryService {
     public CategoryDto getCategoryById(UUID id) {
         return categoryRepository.findById(id)
                 .map(categoryMapper::mapActivityCategoryToDto)
-                .orElseThrow();
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     public List<NameAndCountDto> getCategoriesWithTimeSpent() {
