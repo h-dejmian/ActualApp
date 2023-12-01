@@ -23,13 +23,13 @@ public interface CategoryRepository extends JpaRepository<Category, UUID> {
     Optional<Category> findByNameAndCategoryType(String name, CategoryType categoryType);
 
     @Query("SELECT ac.name, SUM(a.timeSpentInMinutes) as sum FROM Category ac " +
-            "JOIN Activity a ON ac.id = a.category.id " +
+            "JOIN FETCH Activity a ON ac.id = a.category.id " +
             "GROUP BY ac.name " +
             "ORDER BY sum DESC")
     List<List<Object>> getCategoriesWithTimeSpent();
 
     @Query("SELECT ac.name, SUM(a.timeSpentInMinutes) as sum FROM Category ac " +
-            "JOIN Activity a ON ac.id = a.category.id " +
+            "JOIN FETCH Activity a ON ac.id = a.category.id " +
             "WHERE EXTRACT(MONTH from a.date) =  :month " +
             "AND ac.user.id = :userId " +
             "AND ac.categoryType = 'REGULAR' " +

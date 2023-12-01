@@ -37,13 +37,27 @@ public interface ActivityRepository extends JpaRepository<Activity, UUID> {
     List<Activity> findAllWithTimeRange();
 
     @Query("SELECT a.description, SUM(a.timeSpentInMinutes) as sum FROM Activity a " +
-            "WHERE a.category.categoryType = 'REGULAR' AND a.user.id = :userId " +
+            "JOIN FETCH Category c ON c.id = a.category.id " +
+            "WHERE a.category.categoryType = 'REGULAR' " +
+            "AND a.user.id = :userId " +
             "AND a.startTime IS NULL " +
             "AND a.endTime IS NULL " +
             "AND a.completed = true " +
             "GROUP BY a.description " +
             "ORDER BY sum DESC")
     List<List<Object>> getActivitiesByTimeAndUserId(@Param("userId") UUID userId);
+
+    @Query("SELECT a.description, SUM(a.timeSpentInMinutes) as sum FROM Activity a " +
+            "JOIN FETCH Category c ON c.id = a.category.id " +
+            "WHERE a.category.categoryType = 'REGULAR' " +
+            "AND a.user.id = :userId " +
+            "AND a.startTime IS NULL " +
+            "AND a.endTime IS NULL " +
+            "AND a.completed = true " +
+            "AND EXTRACT(MONTH from a.date) =  :month " +
+            "GROUP BY a.description " +
+            "ORDER BY sum DESC")
+    List<List<Object>> getActivitiesWithTimeByUserIdAndMonth(@Param("userId") UUID userId, @Param("month") int month);
 
     @Query("SELECT a.description, COUNT(1) FROM Activity a " +
             "WHERE a.completed=false " +

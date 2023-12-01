@@ -20,7 +20,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -82,6 +81,10 @@ public class ActivityService {
 
     public List<NameAndCountDto> getActivitiesByTimeSpent(UUID userId) {
         return activityMapper.mapToNameAndCountDto(activityRepository.getActivitiesByTimeAndUserId(userId));
+    }
+
+    public List<NameAndCountDto> getActivitiesByTimeSpentInMonth(UUID userId, Integer month) {
+        return activityMapper.mapToNameAndCountDto(activityRepository.getActivitiesWithTimeByUserIdAndMonth(userId, month));
     }
 
     public List<NameAndCountDto> getMostOftenNotCompletedActivity() {
@@ -150,4 +153,6 @@ public class ActivityService {
         int endTimeInMinutes = end.getHour() * 60 + end.getMinute();
         return endTimeInMinutes - startTimeInMinutes;
     }
+
+
 }

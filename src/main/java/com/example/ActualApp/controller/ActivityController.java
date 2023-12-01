@@ -47,9 +47,14 @@ public class ActivityController {
     }
 
     @RolesAllowed({ADMIN, USER})
-    @GetMapping(params = {"groupByTime", "userId"})
-    public List<NameAndCountDto> getActivitiesByTime(@RequestParam UUID userId) {
-         return activityService.getActivitiesByTimeSpent(userId);
+    @GetMapping(params = {"groupByTime", "userId", "month"})
+    public List<NameAndCountDto> getActivitiesByTime(@RequestParam UUID userId, @RequestParam Integer month) {
+        if(month >= 0) {
+            return activityService.getActivitiesByTimeSpentInMonth(userId, month);
+        }
+        else {
+            return activityService.getActivitiesByTimeSpent(userId);
+        }
     }
 
     @RolesAllowed({ADMIN, USER})
