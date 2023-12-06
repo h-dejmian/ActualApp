@@ -33,6 +33,7 @@ public class CategoryMapper {
     }
 
     public List<NameAndCountDto> mapToNameAndCountDto(List<List<Object>> descAndTime) {
+        System.out.println();
         return descAndTime.stream()
                 .map(li -> new NameAndCountDto((String)li.get(0), (long)li.get(1)))
                 .toList();
