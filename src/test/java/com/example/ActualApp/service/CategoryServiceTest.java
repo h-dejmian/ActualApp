@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.instancio.Select.field;
+
 
 class CategoryServiceTest {
 
@@ -166,4 +168,5 @@ class CategoryServiceTest {
         Assertions.assertThat(actual.activitiesNumber()).isEqualTo(category.getActivities().size());
         Assertions.assertThat(actual.timeSpentInMinutes()).isEqualTo(120L);
     }
+
 }
