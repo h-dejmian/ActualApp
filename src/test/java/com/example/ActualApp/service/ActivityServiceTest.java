@@ -317,4 +317,40 @@ class ActivityServiceTest {
         Assertions.assertThat(actual.startTime()).isEqualTo(activity.getStartTime());
         Assertions.assertThat(actual.endTime()).isEqualTo(activity.getEndTime());
     }
+
+    @Test
+    void shouldUpdateActivity() {
+        //Given
+        Activity activity = Instancio.create(Activity.class);
+
+        Category category = Instancio.of(Category.class)
+                .set(field(Category.class, "name"), activity.getCategory().getName())
+                .set(field(Category.class, "categoryType"), CategoryType.REGULAR)
+                .create();
+
+        Category updatedCategory = Instancio.create(Category.class);
+
+        ActivityDto activityDto = new ActivityDto(activity.getId(),
+                                                "updated",
+                                                120L,
+                                                activity.getDate(),
+                                                activity.isCompleted(),
+                                                updatedCategory.getName(),
+                                                activity.getStartTime(),
+                                                activity.getEndTime());
+
+
+        Mockito.when(activityRepository.findById(activity.getId())).thenReturn(Optional.of(activity));
+        Mockito.when(categoryRepository.findByNameAndCategoryType(activityDto.categoryName(), CategoryType.REGULAR)).thenReturn(Optional.of(category));
+        Mockito.when(activityRepository.save(activity)).thenReturn(activity);
+        Mockito.when(activityMapper.mapActivityToDto(activity)).thenReturn(activityDto);
+
+        //When
+        ActivityDto actual = activityService.updateActivity(activity.getId(), activityDto, "REGULAR");
+
+        //Then
+        Assertions.assertThat(actual.description()).isEqualTo("updated");
+        Assertions.assertThat(actual.timeSpentInMinutes()).isEqualTo(120L);
+        Assertions.assertThat(actual.categoryName()).isEqualTo(updatedCategory.getName());
+    }
 }
