@@ -57,4 +57,19 @@ class CategoryRepositoryTest {
         Assertions.assertThat(singleRow.get(0)).isEqualTo("Rozrywka");
         Assertions.assertThat(singleRow.get(1)).isEqualTo(300L);
     }
+
+    @Test
+    void shouldReturnCategoriesWithTimeSpentByMonth() {
+        //Given
+        UUID userId = UUID.fromString("2f85b8fe-2888-4afb-b022-3d34ee604192");
+        int month = 9;
+
+        //When
+        List<List<Object>> queryResult = categoryRepository.getCategoriesWithTimeSpentByMonth(month, userId);
+        List<Object> singleRow = queryResult.get(0);
+
+        //Then
+        Assertions.assertThat(singleRow.get(0)).isEqualTo("Rozrywka");
+        Assertions.assertThat(singleRow.get(1)).isEqualTo(300L);
+    }
 }
