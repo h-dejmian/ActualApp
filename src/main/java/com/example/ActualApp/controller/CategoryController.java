@@ -43,7 +43,7 @@ public class CategoryController {
     @RolesAllowed({ADMIN, USER})
     @GetMapping(params = {"byTimeSpent", "month", "userId"})
     public List<NameAndCountDto> getCategoriesWithTimeSpent(@RequestParam Integer month, @RequestParam UUID userId) {
-        if(month != null) {
+        if(month >= 0) {
             return categoryService.getCategoriesWithTimeByMonth(month, userId);
         }
         else {
