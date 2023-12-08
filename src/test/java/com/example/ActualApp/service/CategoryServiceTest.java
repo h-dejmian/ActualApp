@@ -14,6 +14,7 @@ import org.instancio.Instancio;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -22,6 +23,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.instancio.Select.field;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 
 class CategoryServiceTest {
@@ -167,6 +170,18 @@ class CategoryServiceTest {
         Assertions.assertThat(actual.priority()).isEqualTo(category.getPriority());
         Assertions.assertThat(actual.activitiesNumber()).isEqualTo(category.getActivities().size());
         Assertions.assertThat(actual.timeSpentInMinutes()).isEqualTo(120L);
+    }
+
+    @Test
+    void shouldDeleteCategory() {
+        //Given
+        UUID categoryId = UUID.randomUUID();
+
+        //When
+        categoryService.deleteCategory(categoryId);
+
+        //Then
+        verify(categoryRepository, times(1)).deleteById(categoryId);
     }
 
 }

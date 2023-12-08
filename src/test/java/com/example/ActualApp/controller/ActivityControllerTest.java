@@ -22,6 +22,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.springSecurity;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -122,5 +124,17 @@ class ActivityControllerTest {
                 .andExpect(jsonPath("$.date").value(activityDto.date().toString()))
                 .andExpect(jsonPath("$.completed").value(activityDto.completed()))
                 .andExpect(jsonPath("$.categoryName").value(activityDto.categoryName()));
+    }
+
+    @Test
+    void shouldDeleteActivity() throws Exception {
+        //Given
+        UUID activityId = UUID.randomUUID();
+
+        //When
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/activities/" + activityId));
+
+        //Then
+        verify(activityService, times(1)).deleteActivity(activityId);
     }
 }

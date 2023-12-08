@@ -199,9 +199,6 @@ class CategoryControllerTest {
     void shouldDeleteCategory() throws Exception {
         //Given
         UUID categoryId = UUID.randomUUID();
-        Category category = Instancio.of(Category.class)
-                .set(field(Category.class, "id"), categoryId)
-                        .create();
 
         //When
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/categories/" + categoryId));

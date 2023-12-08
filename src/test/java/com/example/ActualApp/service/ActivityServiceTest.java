@@ -16,12 +16,15 @@ import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.*;
 
 import static org.instancio.Select.field;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 class ActivityServiceTest {
 
@@ -352,5 +355,17 @@ class ActivityServiceTest {
         Assertions.assertThat(actual.description()).isEqualTo("updated");
         Assertions.assertThat(actual.timeSpentInMinutes()).isEqualTo(120L);
         Assertions.assertThat(actual.categoryName()).isEqualTo(updatedCategory.getName());
+    }
+
+    @Test
+    void shouldDeleteActivity() {
+        //Given
+        UUID activityId = UUID.randomUUID();
+
+        //When
+        activityService.deleteActivity(activityId);
+
+        //Then
+        verify(activityRepository, times(1)).deleteById(activityId);
     }
 }
